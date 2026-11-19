@@ -23,6 +23,8 @@ Bastion has been validated end-to-end against the live AWS control plane across 
   - ABAC tag poisoning and STS session-tag smuggling where standard scanners and AWS's own policy simulator diverge from live AWS STS
   - Multi-service `iam:PassRole` precision — blocking admin escalation while preserving benign role passing for the exact same caller
 - **Head-to-Head Scanner Accuracy:** In a balanced `36`-scenario evaluation (`18` genuine escalations, `18` unexploitable decoys across `9` IAM domains), Bastion achieved **`100.0%` Precision, `100.0%` Recall (`1.000` F1)** — compared to **`0.833` F1** for Principal Mapper (`1.1.5`), **`0.276` F1** for Checkov (`3.3.30`), **`0.190` F1** for Trivy (`0.76.0`) and Prowler IaC (`5.48.0`), and **`0.182` F1** for Cloudsplaining (`0.9.1`).
+- **Datadog `pathfinding.cloud` Coverage (`92` Modern AWS Paths):** Bastion detected **`86 / 92` (`93.5%`)** overall — including **`59 / 59` (`100%`)** across all IAM, STS, and mainstream compute-carrier paths — vs. **`60 / 92` (`65.2%`)** for Cloudsplaining, **`27 / 92` (`29.3%`)** for PMapper, **`26 / 92` (`28.3%`)** for Checkov (`CKV_AWS_286`), and **`3 / 92` (`3.3%`)** for Trivy.
+- **Zero-Collateral Remediation (`AWSGoat` & `TerraGoat`):** On INE's `AWSGoat` (`module-2`), Bastion was the **only** tool to catch the full escalation path and synthesize a verified guardrail closing the exploit with **`100%` (`3/3`)** production workload calls intact (competitors produced `0` fixes), while reporting **`0` false escalation alarms** on Bridgecrew's `TerraGoat` (where Checkov and Cloudsplaining both false-alarmed).
 
 ---
 
