@@ -1,4 +1,4 @@
-# Bastion
+# Bastion - No AI, No API Keys, No Hallucinations
 
 **Autonomous, Zero-Collateral AWS IAM Privilege Escalation Detection & Verified Remediation**
 
