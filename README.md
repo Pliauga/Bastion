@@ -91,6 +91,25 @@ sts:AssumeRole on resource: arn:aws:iam::123456789012:role/ops-admin
 
 ---
 
+## Head-to-Head Scanner Comparison (36-Scenario AWS IAM Semantics Suite)
+
+We evaluated Bastion side-by-side against five widely deployed open-source cloud IAM & Infrastructure-as-Code scanners on a balanced **36-scenario live-AWS-grounded benchmark** (`18` genuine multi-hop & semantic privilege escalations paired with `18` unexploitable look-alike decoys across `9` AWS IAM authorization domains). All scanners were scored strictly on findings targeting candidate principals/policies (excluding sink admin roles and generic password-policy/hygiene warnings):
+
+| Tool | Version | TP | FP | FN | TN | Precision | Recall | F1 Score | Verified Fix Synthesis |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Bastion** | Commercial | **`18`** | **`0`** | **`0`** | **`18`** | **`100.0%`** | **`100.0%`** | **`1.000`** | **Yes (Zero-Collateral)** |
+| Principal Mapper (`pmapper`) | `1.1.5` | `15` | `3` | `3` | `15` | `83.3%` | `83.3%` | `0.833` | No (`0`) |
+| Checkov | `3.3.30` | `4` | `7` | `14` | `11` | `36.4%` | `22.2%` | `0.276` | No (`0`) |
+| Trivy | `0.76.0` | `2` | `1` | `16` | `17` | `66.7%` | `11.1%` | `0.190` | No (`0`) |
+| Prowler IaC | `5.48.0` | `2` | `1` | `16` | `17` | `66.7%` | `11.1%` | `0.190` | No (`0`) |
+| Cloudsplaining | `0.9.1` | `2` | `2` | `16` | `16` | `50.0%` | `11.1%` | `0.182` | No (`0`) |
+
+- **IaC linters & static parsers** missed **`78%–89%`** of real multi-hop, scoped, and conditional escalations while flooding teams with false alarms on bounded roles and deny-exclusion guardrails.
+- **Even the strongest open-source graph tool (`pmapper`)** missed multi-hop version rewrites, policy-variable expansions, and ABAC preconditions while firing false positives on boundary-capped and inert policy constructs.
+- **Bastion** achieved **`100.0%` Precision (`0` false positives) and `100.0%` Recall (`0` misses)** — **`+0.167` F1 over `pmapper`** and **`+0.724` to `+0.818` F1 over Checkov, Trivy, Prowler IaC, and Cloudsplaining** — while uniquely synthesizing verified non-breaking remediations.
+
+---
+
 ## Independent Benchmarks & Enterprise Scale
 
 In addition to live AWS control-plane verification, Bastion is validated against published third-party escalation corpora and large-scale synthetic cloud estates:
