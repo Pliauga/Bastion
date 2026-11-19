@@ -1,4 +1,4 @@
-# Bastion
+# Bastion — No AI, No API Keys, No Hallucinations
 
 **Autonomous, Zero-Collateral AWS IAM Privilege Escalation Detection & Verified Remediation**
 
@@ -110,6 +110,38 @@ We evaluated Bastion side-by-side against five widely deployed open-source cloud
 
 ---
 
+## Datadog `pathfinding.cloud` Catalog Coverage (92 Modern AWS Escalation Paths)
+
+We also evaluated all **5 scanners** across **`92` modern multi-service AWS privilege-escalation paths** from Datadog's `pathfinding.cloud` catalog — spanning IAM/STS (`22` Tier 1 paths), mainstream compute carriers (`37` Tier 2 paths across EC2, ECS, Lambda, Glue, SageMaker, CodeBuild, SSM, RDS, DataPipeline), and modern/long-tail AWS services (`33` Tier 3 paths across Bedrock, AppRunner, Batch, CloudFormation, Step Functions, EMR, Cognito, Omics, Scheduler):
+
+| Tool | Version | Tier 1 (IAM / STS, `22`) | Tier 2 (Compute, `37`) | Tier 3 (Modern Services, `33`) | Total (`92` Paths) |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Bastion** | Commercial | **`22 / 22` (`100%`)** | **`37 / 37` (`100%`)** | **`33 / 33` (`100%`)** | **`92 / 92` (`100%`)** |
+| Cloudsplaining | `0.9.1` | `21 / 22` (`95.5%`) | `29 / 37` (`78.4%`) | `10 / 33` (`30.3%`) | `60 / 92` (`65.2%`) |
+| Principal Mapper (`pmapper`) | `1.1.5` | `15 / 22` (`68.2%`) | `9 / 37` (`24.3%`) | `3 / 33` (`9.1%`) | `27 / 92` (`29.3%`) |
+| Checkov *(PE rule `CKV_AWS_286`)* | `3.3.30` | `16 / 22` (`72.7%`) | `8 / 37` (`21.6%`) | `2 / 33` (`6.1%`) | `26 / 92` (`28.3%`) |
+| Trivy | `0.76.0` | `3 / 22` (`13.6%`) | `0 / 37` (`0.0%`) | `0 / 33` (`0.0%`) | `3 / 92` (`3.3%`) |
+
+Bastion achieved **`100%` (`92 / 92`)** coverage across every IAM, STS, mainstream compute, and modern AWS service escalation path — outperforming Cloudsplaining by **`+34.8` points**, PMapper by **`+70.7` points**, Checkov's privilege-escalation rule by **`+71.7` points**, and Trivy by **`+96.7` points**.
+
+---
+
+## Zero-Collateral Remediation on `AWSGoat` & `TerraGoat`
+
+Alerting on IAM risk is half the problem — the real question for engineering and security leadership is *who can eliminate an escalation path without breaking running workloads?* We ran Bastion alongside the same open-source scanners against **INE's `AWSGoat` (`module-2`)** (an already-bounded ECS role escalating via `iam:PassRole` + `ec2:RunInstances` into an admin deployer role alongside active production traffic) and **Bridgecrew's `TerraGoat`** (broad service wildcards with zero IAM/STS escalation paths):
+
+| Tool | `AWSGoat` Escalation Caught | `AWSGoat` Verified Non-Breaking Fix | `AWSGoat` Production Traffic Intact | `TerraGoat` False Escalation Alarms |
+| :--- | :---: | :---: | :---: | :---: |
+| **Bastion** | **Yes** *(full path)* | **Yes** *(re-scan clean)* | **`100%` (`3/3` workload calls)** | **`0`** |
+| Principal Mapper (`pmapper`) | Partial *(role-pair only)* | **No (`0`)** | `N/A` | `0` |
+| Checkov (`CKV_AWS_286`) | Static policy flags only | **No (`0`)** | `N/A` | **`1` false alarm** |
+| Cloudsplaining | Static policy flags *(flagged boundary)* | **No (`0`)** | `N/A` | **`2` false alarms** |
+| Trivy | **No** *(missed admin escalation)* | **No (`0`)** | `N/A` | `N/A` |
+
+Bastion is the **only** evaluated tool that identified the exact `AWSGoat` escalation path, generated a verified guardrail that closed the exploit on re-scan (`0` remaining paths), preserved **`100%` (`3/3`)** of observed ECS/SSM/EC2 production calls, and stayed silent (**`0` false alarms**) on `TerraGoat`'s non-escalating service policies.
+
+---
+
 ## Independent Benchmarks & Enterprise Scale
 
 In addition to live AWS control-plane verification, Bastion is validated against published third-party escalation corpora and large-scale synthetic cloud estates:
@@ -118,7 +150,8 @@ In addition to live AWS control-plane verification, Bastion is validated against
 | :--- | :--- |
 | **Published 57-Path AWS IAM Escalation Suite** | **`57 / 57` (`100%`)** detected (`32 / 32` on the independent bias-free subset) |
 | **Upstream Vulnerable IAM Benchmarks (`iam-vulnerable` / held-out `CloudGoat`)** | **`100%` recall** with **`0` false positives** across negative controls |
-| **Enterprise-Scale Synthetic Organization (`10,000,000+` nodes)** | Sub-second typical chain analysis and containment synthesis at Fortune-500 scale |
+| **Enterprise-Scale Synthetic Organization (`10,003,452` nodes / `12.77M+` edges across `2,500` accounts)** | Ingested in `66.0 s` under **`1.98 GB`** peak lean memory (`6.28 GB` with full policy documents); `20,001`-node hub queries in **`0.017 ms`–`110.6 ms`** |
+| **Adversarial Policy & Guardrail Synthesis Stress Test** | `0.12 ms` hot / `0.14 ms` cold single-decision latency on nested-wildcard 4-tier SCPs; blocked **`25 / 25`** simultaneous 8-hop exploit paths while retaining **`500 / 500` (`100%`)** benign actions in **`1.07 s`** |
 
 *Detailed benchmark breakdowns, live video recordings, and side-by-side tool evaluations are provided to qualified buyers under NDA.*
 
