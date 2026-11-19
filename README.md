@@ -1,4 +1,4 @@
-# Bastion - No AI, No API Keys, No Hallucinations
+# Bastion — No AI, No API Keys, No Hallucinations
 
 **Autonomous, Zero-Collateral AWS IAM Privilege Escalation Detection & Verified Remediation**
 
@@ -150,7 +150,8 @@ In addition to live AWS control-plane verification, Bastion is validated against
 | :--- | :--- |
 | **Published 57-Path AWS IAM Escalation Suite** | **`57 / 57` (`100%`)** detected (`32 / 32` on the independent bias-free subset) |
 | **Upstream Vulnerable IAM Benchmarks (`iam-vulnerable` / held-out `CloudGoat`)** | **`100%` recall** with **`0` false positives** across negative controls |
-| **Enterprise-Scale Synthetic Organization (`10,000,000+` nodes)** | Sub-second typical chain analysis and containment synthesis at Fortune-500 scale |
+| **Enterprise-Scale Synthetic Organization (`10,003,452` nodes / `12.77M+` edges across `2,500` accounts)** | Ingested in `66.0 s` under **`1.98 GB`** peak lean memory (`6.28 GB` with full policy documents); `20,001`-node hub queries in **`0.017 ms`–`110.6 ms`** |
+| **Adversarial Policy & Guardrail Synthesis Stress Test** | `0.12 ms` hot / `0.14 ms` cold single-decision latency on nested-wildcard 4-tier SCPs; blocked **`25 / 25`** simultaneous 8-hop exploit paths while retaining **`500 / 500` (`100%`)** benign actions in **`1.07 s`** |
 
 *Detailed benchmark breakdowns, live video recordings, and side-by-side tool evaluations are provided to qualified buyers under NDA.*
 
