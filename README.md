@@ -52,6 +52,11 @@ Bastion models the live AWS authorization engine across the subtle policy constr
 When dropped into an unfamiliar multi-principal account with zero path hints and hostile decoys alongside innocent fleet identities:
 - **`100%` recall on planted multi-hop chains** with **`0` false positives** across hostile decoys and innocent service roles.
 
+### 6. Coordinated Multi-Layer Containment & Adversarial Evasion Resilience
+When a single guardrail layer leaves an alternate route open — such as a resource-policy bypass alongside an identity flaw and a federated trust trap — Bastion coordinates containment across **Permissions Boundaries, Trust Policies, and Resource Policies simultaneously**:
+- **Coordinated 3-layer live enforcement:** Verified end-to-end on live AWS by closing identity escalation, trust-policy exposure, and a same-account session-ARN S3 resource-policy bypass in one unified remediation pass — blocking every attack path (`HTTP 403`) while keeping legitimate workloads running (`HTTP 200`, zero collateral breakage).
+- **Adversarial evasion & decoy precision (`100%` Recall, `0` False Positives):** Catches obfuscated `Allow NotAction`, `NotResource` exclusions, tag-interpolated `${aws:PrincipalTag/...}` targets, and `iam:PassedToService` multi-service grants live on AWS (`HTTP 200`/`201` → `403`), while staying completely silent on matched inert decoys (safe `Deny NotAction` guardrails, mismatched `iam:PassedToService` preconditions, and identical variable policies bound to non-privileged tags).
+
 ---
 
 ## Sanitized Live AWS Control-Plane Excerpts
