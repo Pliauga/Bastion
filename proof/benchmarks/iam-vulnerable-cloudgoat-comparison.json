@@ -1,0 +1,140 @@
+{
+  "generated_at": "2026-11-10T12:08:43Z",
+  "corpus": {
+    "rows_scored": 90,
+    "rows_total": 103,
+    "rows_unparsed": 13,
+    "rows_excluded_undetermined": 24,
+    "labelled_positive": 79,
+    "labelled_negative": 11,
+    "repos": [
+      {
+        "name": "BishopFox/iam-vulnerable",
+        "url": "https://github.com/BishopFox/iam-vulnerable",
+        "commit": "0f298666f9b7cfa01488b86912afdb211773188a",
+        "cloned_at": "2026-11-07T19:40:42Z"
+      },
+      {
+        "name": "RhinoSecurityLabs/cloudgoat",
+        "url": "https://github.com/RhinoSecurityLabs/cloudgoat",
+        "commit": "63c65bd26edc6919499adfa20b176c450e35c33c",
+        "cloned_at": "2026-11-07T19:40:42Z"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "tool": "Bastion",
+      "tp": 77,
+      "fp": 0,
+      "fn": 2,
+      "tn": 11,
+      "precision": 1.0,
+      "recall": 0.9747,
+      "f1": 0.9872,
+      "rows_scored": 90,
+      "rows_excluded": 24
+    },
+    {
+      "tool": "Checkov",
+      "tp": 44,
+      "fp": 4,
+      "fn": 35,
+      "tn": 7,
+      "precision": 0.9167,
+      "recall": 0.557,
+      "f1": 0.6929,
+      "rows_scored": 90,
+      "rows_excluded": 24
+    },
+    {
+      "tool": "Trivy",
+      "tp": 25,
+      "fp": 0,
+      "fn": 54,
+      "tn": 11,
+      "precision": 1.0,
+      "recall": 0.3165,
+      "f1": 0.4808,
+      "rows_scored": 90,
+      "rows_excluded": 24
+    },
+    {
+      "tool": "Cloudsplaining",
+      "tp": 44,
+      "fp": 2,
+      "fn": 35,
+      "tn": 9,
+      "precision": 0.9565,
+      "recall": 0.557,
+      "f1": 0.704,
+      "rows_scored": 90,
+      "rows_excluded": 24
+    },
+    {
+      "tool": "PMapper",
+      "tp": 5,
+      "fp": 0,
+      "fn": 74,
+      "tn": 11,
+      "precision": 1.0,
+      "recall": 0.0633,
+      "f1": 0.119,
+      "rows_scored": 90,
+      "rows_excluded": 24
+    }
+  ],
+  "scenario_level": {
+    "rule": "a scenario is a true positive iff ANY principal inside it is flagged, which is the rule cloudgoat's own scenario-level labels use",
+    "scenarios": 47,
+    "positives": 41,
+    "negatives": 6,
+    "overall": {
+      "Bastion": {
+        "tp": 41,
+        "fp": 0,
+        "fn": 0,
+        "tn": 6,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "Checkov": {
+        "tp": 23,
+        "fp": 2,
+        "fn": 18,
+        "tn": 4,
+        "precision": 0.92,
+        "recall": 0.561,
+        "f1": 0.697
+      },
+      "Trivy": {
+        "tp": 13,
+        "fp": 0,
+        "fn": 28,
+        "tn": 6,
+        "precision": 1.0,
+        "recall": 0.3171,
+        "f1": 0.4815
+      },
+      "Cloudsplaining": {
+        "tp": 24,
+        "fp": 1,
+        "fn": 17,
+        "tn": 5,
+        "precision": 0.96,
+        "recall": 0.5854,
+        "f1": 0.7273
+      },
+      "PMapper": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 38,
+        "tn": 6,
+        "precision": 1.0,
+        "recall": 0.0732,
+        "f1": 0.1364
+      }
+    }
+  }
+}

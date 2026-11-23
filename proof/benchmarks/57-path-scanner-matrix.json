@@ -1,0 +1,978 @@
+{
+  "benchmark": "https://haitmg.pl/blog/aws-iam-privesc-scanners-benchmark/",
+  "benchmark_date": "2026-04-28",
+  "composition": {
+    "bishop_fox": 32,
+    "cloud_audit_custom": 25
+  },
+  "matrix_matches_published": true,
+  "published": {
+    "cloud_audit": {
+      "passed": 53,
+      "percentage": 93.0,
+      "total": 57
+    },
+    "cloudfox": {
+      "passed": 4,
+      "percentage": 7.0,
+      "total": 57
+    },
+    "cloudsplaining": {
+      "passed": 20,
+      "percentage": 35.1,
+      "total": 57
+    },
+    "pmapper": {
+      "passed": 19,
+      "percentage": 33.3,
+      "total": 57
+    },
+    "prowler": {
+      "passed": 37,
+      "percentage": 64.9,
+      "total": 57
+    }
+  },
+  "recomputed_from_matrix": {
+    "cloud_audit": {
+      "passed": 53,
+      "percentage": 93.0,
+      "total": 57
+    },
+    "cloudfox": {
+      "passed": 4,
+      "percentage": 7.0,
+      "total": 57
+    },
+    "cloudsplaining": {
+      "passed": 20,
+      "percentage": 35.1,
+      "total": 57
+    },
+    "pmapper": {
+      "passed": 19,
+      "percentage": 33.3,
+      "total": 57
+    },
+    "prowler": {
+      "passed": 37,
+      "percentage": 64.9,
+      "total": 57
+    }
+  },
+  "rows": [
+    {
+      "bench_id": "BF-1",
+      "category": "IAM Self-Mutation",
+      "method": "iam:CreatePolicyVersion",
+      "oracle": "manual_extraction",
+      "resource": "privesc1",
+      "scenario_id": "pathfinding_bf-1",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-2",
+      "category": "IAM Self-Mutation",
+      "method": "iam:SetDefaultPolicyVersion",
+      "oracle": "manual_extraction",
+      "resource": "privesc2",
+      "scenario_id": "pathfinding_bf-2",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-3",
+      "category": "PassRole+Service",
+      "method": "EC2 RunInstances + InstanceProfile",
+      "oracle": "manual_extraction",
+      "resource": "privesc3",
+      "scenario_id": "pathfinding_bf-3",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-4",
+      "category": "Credential Access",
+      "method": "iam:CreateAccessKey",
+      "oracle": "manual_extraction",
+      "resource": "privesc4",
+      "scenario_id": "pathfinding_bf-4",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-5",
+      "category": "Credential Access",
+      "method": "iam:CreateLoginProfile",
+      "oracle": "manual_extraction",
+      "resource": "privesc5",
+      "scenario_id": "pathfinding_bf-5",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-6",
+      "category": "Credential Access",
+      "method": "iam:UpdateLoginProfile",
+      "oracle": "manual_extraction",
+      "resource": "privesc6",
+      "scenario_id": "pathfinding_bf-6",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-7",
+      "category": "IAM Self-Mutation",
+      "method": "iam:AttachUserPolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc7",
+      "scenario_id": "pathfinding_bf-7",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-8",
+      "category": "IAM Self-Mutation",
+      "method": "iam:AttachGroupPolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc8",
+      "scenario_id": "pathfinding_bf-8",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-9",
+      "category": "IAM Self-Mutation",
+      "method": "iam:AttachRolePolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc9",
+      "scenario_id": "pathfinding_bf-9",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": false,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-10",
+      "category": "IAM Self-Mutation",
+      "method": "iam:PutUserPolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc10",
+      "scenario_id": "pathfinding_bf-10",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-11",
+      "category": "IAM Self-Mutation",
+      "method": "iam:PutGroupPolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc11",
+      "scenario_id": "pathfinding_bf-11",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-12",
+      "category": "IAM Self-Mutation",
+      "method": "iam:PutRolePolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc12",
+      "scenario_id": "pathfinding_bf-12",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": false,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-13",
+      "category": "Credential Access",
+      "method": "iam:AddUserToGroup",
+      "oracle": "manual_extraction",
+      "resource": "privesc13",
+      "scenario_id": "pathfinding_bf-13",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-14",
+      "category": "Trust Policy Abuse",
+      "method": "iam:UpdateAssumeRolePolicy",
+      "oracle": "manual_extraction",
+      "resource": "privesc14",
+      "scenario_id": "pathfinding_bf-14",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-15",
+      "category": "PassRole+Service",
+      "method": "PassRole+Lambda+Invoke",
+      "oracle": "manual_extraction",
+      "resource": "privesc15",
+      "scenario_id": "pathfinding_bf-15",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-16",
+      "category": "PassRole+Service",
+      "method": "PassRole+Lambda+EventSource",
+      "oracle": "manual_extraction",
+      "resource": "privesc16",
+      "scenario_id": "pathfinding_bf-16",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-17",
+      "category": "Lambda Code Mod",
+      "method": "lambda:UpdateFunctionCode",
+      "oracle": "manual_extraction",
+      "resource": "privesc17",
+      "scenario_id": "pathfinding_bf-17",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-18",
+      "category": "PassRole+Service",
+      "method": "PassRole+Glue:CreateDevEndpoint",
+      "oracle": "manual_extraction",
+      "resource": "privesc18",
+      "scenario_id": "pathfinding_bf-18",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-19",
+      "category": "Compute Hijack",
+      "method": "Glue:UpdateDevEndpoint",
+      "oracle": "manual_extraction",
+      "resource": "privesc19",
+      "scenario_id": "pathfinding_bf-19",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-20",
+      "category": "PassRole+Service",
+      "method": "PassRole+CloudFormation:CreateStack",
+      "oracle": "manual_extraction",
+      "resource": "privesc20",
+      "scenario_id": "pathfinding_bf-20",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-21",
+      "category": "PassRole+Service",
+      "method": "PassRole+DataPipeline",
+      "oracle": "manual_extraction",
+      "resource": "privesc21",
+      "scenario_id": "pathfinding_bf-21",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-22",
+      "category": "Lateral AssumeRole",
+      "method": "3-hop AssumeRole chain",
+      "oracle": "manual_extraction",
+      "resource": "privesc-AssumeRole",
+      "scenario_id": "pathfinding_bf-22",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": false,
+        "cloudfox": true,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "BF-23",
+      "category": "PassRole+Service",
+      "method": "PassRole+CodeBuild",
+      "oracle": "manual_extraction",
+      "resource": "privesc-codeBuild",
+      "scenario_id": "pathfinding_bf-23",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-24",
+      "category": "PassRole+Service",
+      "method": "PassRole+CFN:UpdateStack",
+      "oracle": "manual_extraction",
+      "resource": "privesc-CFNUpdate",
+      "scenario_id": "pathfinding_bf-24",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": false,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-25",
+      "category": "Compute Hijack",
+      "method": "EC2InstanceConnect:SendSSHPublicKey",
+      "oracle": "manual_extraction",
+      "resource": "privesc-ec2InstanceConnect",
+      "scenario_id": "pathfinding_bf-25",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-26",
+      "category": "PassRole+Service",
+      "method": "PassRole+SageMaker:Notebook",
+      "oracle": "manual_extraction",
+      "resource": "privesc-sageNotebook",
+      "scenario_id": "pathfinding_bf-26",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-27",
+      "category": "Compute Hijack",
+      "method": "SageMaker:CreatePresignedNotebookUrl",
+      "oracle": "manual_extraction",
+      "resource": "privesc-sagePresignedURL",
+      "scenario_id": "pathfinding_bf-27",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-28",
+      "category": "PassRole+Service",
+      "method": "PassRole+SageMaker:ProcessingJob",
+      "oracle": "manual_extraction",
+      "resource": "privesc-sageProcessingJob",
+      "scenario_id": "pathfinding_bf-28",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-29",
+      "category": "PassRole+Service",
+      "method": "PassRole+SageMaker:TrainingJob",
+      "oracle": "manual_extraction",
+      "resource": "privesc-sageTrainingJob",
+      "scenario_id": "pathfinding_bf-29",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-30",
+      "category": "Compute Hijack",
+      "method": "SSM:SendCommand",
+      "oracle": "manual_extraction",
+      "resource": "privesc-ssmSendCommand",
+      "scenario_id": "pathfinding_bf-30",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-31",
+      "category": "Compute Hijack",
+      "method": "SSM:StartSession",
+      "oracle": "manual_extraction",
+      "resource": "privesc-ssmStartSession",
+      "scenario_id": "pathfinding_bf-31",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "BF-32",
+      "category": "Credential Access",
+      "method": "Group admin policy",
+      "oracle": "manual_extraction",
+      "resource": "privesc-sre",
+      "scenario_id": "pathfinding_bf-32",
+      "source": "BishopFox/iam-vulnerable",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": true,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "CT-1",
+      "category": "Resource Policy Abuse",
+      "method": "Lambda:AddPermission",
+      "oracle": "synthesis",
+      "resource": "custom-lambda-addperm",
+      "scenario_id": "pathfinding_ct-1",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "CT-2",
+      "category": "Resource Policy Abuse",
+      "method": "Lambda:AddLayerVersionPermission",
+      "oracle": "synthesis",
+      "resource": "custom-lambda-layer",
+      "scenario_id": "pathfinding_ct-2",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-3",
+      "category": "PassRole+Service",
+      "method": "PassRole+EC2:AssociateInstanceProfile",
+      "oracle": "synthesis",
+      "resource": "custom-ec2-associate",
+      "scenario_id": "pathfinding_ct-3",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-4",
+      "category": "PassRole+Service",
+      "method": "PassRole+EC2:ReplaceInstanceProfileAssociation",
+      "oracle": "synthesis",
+      "resource": "custom-ec2-replace",
+      "scenario_id": "pathfinding_ct-4",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-5",
+      "category": "PassRole+Service",
+      "method": "InstanceProfileRoleSwap",
+      "oracle": "synthesis",
+      "resource": "custom-ip-swap",
+      "scenario_id": "pathfinding_ct-5",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-6",
+      "category": "PassRole+Service",
+      "method": "PassRole+ECS:UpdateService",
+      "oracle": "synthesis",
+      "resource": "custom-ecs-update-service",
+      "scenario_id": "pathfinding_ct-6",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-7",
+      "category": "PassRole+Service",
+      "method": "PassRole+ECS:RegisterTaskDefinition",
+      "oracle": "manual_extraction",
+      "resource": "custom-ecs-register",
+      "scenario_id": "pathfinding_ct-7",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-8",
+      "category": "IAM Self-Mutation",
+      "method": "DeleteRolePolicy + AssumeRole",
+      "oracle": "synthesis",
+      "resource": "custom-delete-rolepolicy",
+      "scenario_id": "pathfinding_ct-8",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-9",
+      "category": "IAM Self-Mutation",
+      "method": "DeleteUserPolicy",
+      "oracle": "synthesis",
+      "resource": "custom-delete-userpolicy",
+      "scenario_id": "pathfinding_ct-9",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-10",
+      "category": "IAM Self-Mutation",
+      "method": "DetachRolePolicy + AssumeRole",
+      "oracle": "synthesis",
+      "resource": "custom-detach-rolepolicy",
+      "scenario_id": "pathfinding_ct-10",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-11",
+      "category": "IAM Self-Mutation",
+      "method": "DetachUserPolicy",
+      "oracle": "synthesis",
+      "resource": "custom-detach-userpolicy",
+      "scenario_id": "pathfinding_ct-11",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-12",
+      "category": "IAM Self-Mutation",
+      "method": "CreateServiceLinkedRole",
+      "oracle": "synthesis",
+      "resource": "custom-csr",
+      "scenario_id": "pathfinding_ct-12",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-13",
+      "category": "Credential Access",
+      "method": "DeactivateMFADevice",
+      "oracle": "synthesis",
+      "resource": "custom-deactivate-mfa",
+      "scenario_id": "pathfinding_ct-13",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-14",
+      "category": "Credential Access",
+      "method": "DeleteVirtualMFADevice",
+      "oracle": "synthesis",
+      "resource": "custom-delete-mfa",
+      "scenario_id": "pathfinding_ct-14",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-15",
+      "category": "Credential Access",
+      "method": "UpdateAccessKey",
+      "oracle": "synthesis",
+      "resource": "custom-update-accesskey",
+      "scenario_id": "pathfinding_ct-15",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-16",
+      "category": "PassRole+Service",
+      "method": "PassRole+AppRunner:CreateService",
+      "oracle": "manual_extraction",
+      "resource": "custom-apprunner-create",
+      "scenario_id": "pathfinding_ct-16",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "CT-17",
+      "category": "PassRole+Service",
+      "method": "PassRole+Bedrock:CreateAgent",
+      "oracle": "synthesis",
+      "resource": "custom-bedrock-agent",
+      "scenario_id": "pathfinding_ct-17",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-18",
+      "category": "PassRole+Service",
+      "method": "PassRole+StepFunctions:CreateStateMachine",
+      "oracle": "manual_extraction",
+      "resource": "custom-stepfunctions",
+      "scenario_id": "pathfinding_ct-18",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-19",
+      "category": "Compute Hijack",
+      "method": "CodeBuild:UpdateProject",
+      "oracle": "synthesis",
+      "resource": "custom-codebuild-hijack",
+      "scenario_id": "pathfinding_ct-19",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "CT-20",
+      "category": "Compute Hijack",
+      "method": "AppRunner:UpdateService",
+      "oracle": "manual_extraction",
+      "resource": "custom-apprunner-hijack",
+      "scenario_id": "pathfinding_ct-20",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "CT-21",
+      "category": "Credential Access",
+      "method": "SSM:GetParameter",
+      "oracle": "synthesis",
+      "resource": "custom-ssm-getparameter",
+      "scenario_id": "pathfinding_ct-21",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-22",
+      "category": "Lateral AssumeRole",
+      "method": "AssumeRole:Direct",
+      "oracle": "manual_extraction",
+      "resource": "custom-lateral-alice",
+      "scenario_id": "pathfinding_ct-22",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": true,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-23",
+      "category": "Lateral AssumeRole",
+      "method": "AssumeRole:Chain (2-hop)",
+      "oracle": "manual_extraction",
+      "resource": "custom-lateral-bob",
+      "scenario_id": "pathfinding_ct-23",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": false,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": false
+      }
+    },
+    {
+      "bench_id": "CT-24",
+      "category": "Lateral AssumeRole",
+      "method": "AssumeRole:WildcardTrust",
+      "oracle": "synthesis",
+      "resource": "custom-lateral-WildcardRole",
+      "scenario_id": "pathfinding_ct-24",
+      "source": "DataDog/pathfinding.cloud",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": true,
+        "cloudsplaining": false,
+        "pmapper": true,
+        "prowler": true
+      }
+    },
+    {
+      "bench_id": "CT-25",
+      "category": "Lateral AssumeRole",
+      "method": "AssumeRole:CrossAccountRoot",
+      "oracle": "manual_extraction",
+      "resource": "custom-lateral-CrossAcctRole",
+      "scenario_id": "pathfinding_ct-25",
+      "source": "DataDog/pathfinding-labs",
+      "tools": {
+        "cloud_audit": true,
+        "cloudfox": true,
+        "cloudsplaining": false,
+        "pmapper": false,
+        "prowler": true
+      }
+    }
+  ],
+  "rows_total": 57
+}

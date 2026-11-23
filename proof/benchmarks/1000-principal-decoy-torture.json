@@ -1,0 +1,288 @@
+{
+  "estate": {
+    "decoys": 950,
+    "roles_in_snapshot": 1292,
+    "total_principals": 1000,
+    "true_positives": 50
+  },
+  "detection": {
+    "caught": 50,
+    "false_positive_principals": [],
+    "false_positives": 0,
+    "missed": [],
+    "recall": 1.0
+  },
+  "latency": {
+    "evaluations": 13300,
+    "p50_ms": 710.834,
+    "p95_ms": 1292.267,
+    "p99_ms": 2339.283,
+    "total_ms": 810114.252
+  },
+  "remediation": {
+    "benign_preserved": 50,
+    "boundary_chars": 605,
+    "boundary_statements": 3,
+    "details": [
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a0-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a1-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a2-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a3-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a4-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a5-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a6-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a7-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a8-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-a9-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b0-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b1-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b2-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b3-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b4-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b5-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b6-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b7-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b8-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-b9-hop0"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c0-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c1-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c2-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c3-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c4-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c5-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c6-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c7-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c8-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-c9-notaction"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d0-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d1-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d2-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d3-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d4-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d5-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d6-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d7-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d8-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-d9-tagvar"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e0-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e1-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e2-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e3-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e4-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e5-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e6-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e7-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e8-boundary"
+      },
+      {
+        "benign_allowed": true,
+        "entry_denied": true,
+        "principal": "principal-e9-boundary"
+      }
+    ],
+    "escalations_closed": 50
+  },
+  "sarif": {
+    "elapsed_ms": 471190.9,
+    "exit_code": 1,
+    "sarif_present": true,
+    "sarif_results": 1
+  },
+  "spend_usd": 0.0,
+  "failed": false
+}

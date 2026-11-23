@@ -172,6 +172,8 @@ In addition to live AWS control-plane verification, Bastion is validated against
 | **Adversarial Policy & Guardrail Synthesis Stress Test** | `0.12 ms` hot / `0.14 ms` cold single-decision latency on nested-wildcard 4-tier SCPs; blocked **`25 / 25`** simultaneous 8-hop exploit paths while retaining **`500 / 500` (`100%`)** benign actions in **`1.07 s`** |
 | **`1,000`-Principal Adversarial Decoy Torture (`50` buried chains + `950` hostile look-alikes)** | **`50 / 50` (`100%`)** recall (`2–6` hops, `Allow NotAction`, `${aws:PrincipalTag/...}`, `PassRole`, boundary removal), **`0 / 950` (`0.00%`)** false positives across `8` trap classes, and **`50 / 50`** boundaries synthesized with **`50 / 50`** benign grants intact |
 
+**Sanitized Benchmark JSON Teasers:** [`57-path-scanner-matrix.json`](./proof/benchmarks/57-path-scanner-matrix.json) · [`57-path-bastion-comparison.json`](./proof/benchmarks/57-path-bastion-comparison.json) · [`iam-vulnerable-cloudgoat-comparison.json`](./proof/benchmarks/iam-vulnerable-cloudgoat-comparison.json) · [`10m-node-scale-stress.json`](./proof/benchmarks/10m-node-scale-stress.json) · [`10m-node-memory-profile.json`](./proof/benchmarks/10m-node-memory-profile.json) · [`1000-principal-decoy-torture.json`](./proof/benchmarks/1000-principal-decoy-torture.json)
+
 *Detailed benchmark breakdowns, live video recordings, and side-by-side tool evaluations are provided to qualified buyers under NDA.*
 
 ---
