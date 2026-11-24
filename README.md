@@ -8,7 +8,20 @@ Every cloud security scanner can hand your team ten thousand IAM alerts. Almost 
 
 **Bastion closes the gap between finding an escalation chain and safely eliminating it.** It evaluates real AWS IAM authorization semantics across live cloud estates and pending Infrastructure-as-Code changes, proves which multi-step routes reach privileged targets, and generates targeted guardrails verified to block the escalation while keeping legitimate production traffic untouched.
 
-**Quick links:** [Executive CISO Brief](./proof/CISO_SUMMARY.md) · [Plain-English Enterprise Scenarios](./docs/EXECUTIVE_SCENARIOS.md) · [MITRE ATT&CK Coverage](./docs/MITRE_ATTACK_COVERAGE.md)
+**Quick links:** [Executive CISO Brief](./proof/CISO_SUMMARY.md) · [Plain-English Enterprise Scenarios](./docs/EXECUTIVE_SCENARIOS.md) · [MITRE ATT&CK Coverage](./docs/MITRE_ATTACK_COVERAGE.md) · [Benchmark JSON Teasers](./proof/benchmarks/)
+
+---
+
+## Live AWS & Enterprise-Scale Proof Highlights
+
+| What Was Proven | Live AWS / Scale Result | Collateral Impact |
+| :--- | :--- | :--- |
+| **Prompt-Injected AI Coding Agents** | `4/4` rogue pivots (`200`) → **`8/8` blocked (`HTTP 403`)** | **`2/2` dev workflows `200` (`Δ = 0`)** |
+| **Zero-Downtime Incident Response** | Compromised CI/CD role contained **in place** (`8/8` `403`, stolen token blocked) | **`59/59` live prod calls `200` (`0` downtime)** |
+| **Third-Party SaaS Vendor Roles** | `8/8` vendor breach vectors `403` + wrong `ExternalId` rejected (`403`) | **`2/2` telemetry calls `200` (`Δ = 0`)** |
+| **AWS IAM Access Analyzer Blind Spots** | Access Analyzer: **`0` findings** across `6` resources → Bastion: **`4/4` caught & closed** | **`100%` benign survival (`Δ = 0`)** |
+| **Escape Test Under `AdministratorAccess`** | **`15/15` escape attempts `HTTP 403`** from one assumed session (`16/16` parity) | **`100%` benign reads `200` (`Δ = 0`)** |
+| **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.12 ms` SCP) · `1,000`-principal torture: **`50/50` recall** | **`0 / 950` (`0.00%`) false positives** |
 
 ---
 
@@ -67,8 +80,11 @@ When a single guardrail layer leaves an alternate route open — such as a resou
 - **Side-by-side AWS IAM Access Analyzer blind-spot showdown:** On live AWS across four real attack classes (same-account multi-hop chain, dormant `SetDefaultPolicyVersion` rollback, `${aws:PrincipalTag/...}` variable escalation, and session-ARN S3 boundary bypass), **AWS IAM Access Analyzer reported `0` findings across `6` scanned resources**, while **Bastion caught `4/4` (`0` decoy false positives)** and closed every path live (`HTTP 200` → `403`, `Δ Benign = 0`).
 
 - **Bounded `AdministratorAccess` `15`-vector escape test:** With **`AdministratorAccess` attached directly to a live AWS role** capped by a Bastion guardrail, **`15/15` live escape attempts** (`DeleteRolePermissionsBoundary`, `PutRolePermissionsBoundary`, `CreatePolicyVersion`, `SetDefaultPolicyVersion`, unbounded/bypassing `CreateRole`/`CreateUser`, `PutRolePolicy`, `AttachRolePolicy`, `UpdateAssumeRolePolicy`, `CreateAccessKey`, `AddUserToGroup`, `AssumeRole`, `PassRole` via `lambda:CreateFunction`, and protected S3 read) all bounced at **`HTTP 403`** from one assumed session (`16/16` live AWS parity) while legitimate reads stayed **`HTTP 200` (`Δ Benign = 0`)**.
+
+### 8. Live Operational Containment: AI Agents, Zero-Downtime IR & Third-Party Vendors
 - **Prompt-injected AI coding-agent containment (live AWS):** Provisioned an over-privileged AI agent role (`Allow NotAction` developer authority excluding only `organizations:*` / `account:*`) where **`4/4` prompt-injected rogue actions succeeded (`HTTP 200`)**, including `sts:AssumeRole` into a production administrator role and reading a protected production S3 object; Bastion ingested the live account, synthesized a **5-statement** guardrail, and blocked **`8/8` rogue escalation and persistence vectors (`HTTP 403`)**—including `iam:CreateRole`, `iam:DeleteRolePermissionsBoundary`, `lambda:CreateFunction`, `iam:PutRolePolicy`, `iam:CreateAccessKey`, `s3:PutBucketPolicy`, `sts:AssumeRole`, and production S3 read—while keeping **`2/2` legitimate developer S3 workflows at `HTTP 200` (`Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources)**.
 - **Zero-downtime incident-response containment (live AWS):** Provisioned a live compromised CI/CD release-runner role (`Allow NotAction`) with a continuous `1.0s` production S3 heartbeat (`59` calls across pre-containment, in-place guardrail attachment, and post-containment) using the runner's **original** session (`0` credential rotation or role deletion); **`4/4` attacker moves succeeded pre-containment (`HTTP 200`)**, Bastion attached its synthesized **6-statement** guardrail **in place** with **`0` downtime errors across all `59` production calls**, neutralized the already-issued stolen session, blocked **`8/8` attacker vectors (`HTTP 403`)**, and kept **`3/3` legitimate CI/CD operations at `HTTP 200` (`Δ Benign = 0`, `11/11` live AWS parity, `0` leaked resources)**.
+- **Third-party SaaS / vendor integration containment (live AWS):** Provisioned an over-privileged SaaS vendor role (`Allow NotAction` + `sts:ExternalId` trust) where **`4/4` pre-containment pivots succeeded (`HTTP 200`)**, including assuming an organization administrator role and reading customer PII; Bastion attached its synthesized **5-statement** guardrail **in place** (`no revocation`, `no rotation`), confirmed confused-deputy rejection (`wrong ExternalId` → `HTTP 403`), blocked **`8/8` vendor breach vectors (`HTTP 403`)**, and kept **`2/2` legitimate telemetry S3 calls at `HTTP 200` (`Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources)**.
 
 ---
 
