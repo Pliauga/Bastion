@@ -21,7 +21,7 @@ Every cloud security scanner can hand your team ten thousand IAM alerts. Almost 
 | **Third-Party SaaS Vendor Roles** | `8/8` vendor breach vectors `403` + wrong `ExternalId` rejected (`403`) | **`2/2` telemetry calls `200` (`Δ = 0`)** |
 | **AWS IAM Access Analyzer Blind Spots** | Access Analyzer: **`0` findings** across `6` resources → Bastion: **`4/4` caught & closed** | **`100%` benign survival (`Δ = 0`)** |
 | **Escape Test Under `AdministratorAccess`** | **`15/15` escape attempts `HTTP 403`** from one assumed session (`16/16` parity) | **`100%` benign reads `200` (`Δ = 0`)** |
-| **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.12 ms` SCP) · `1,000`-principal torture: **`50/50` recall** | **`0 / 950` (`0.00%`) false positives** |
+| **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.12 ms` SCP) · `1,000`-principal torture: **`50/50` recall in `0.061 s`** (`4.57 s` CI gate over `1,293` principals) | **`0 / 950` (`0.00%`) false positives** |
 
 ---
 
@@ -186,7 +186,7 @@ In addition to live AWS control-plane verification, Bastion is validated against
 | **Upstream Vulnerable IAM Benchmarks (`iam-vulnerable` / held-out `CloudGoat`)** | **`100%` recall** with **`0` false positives** across negative controls |
 | **Enterprise-Scale Synthetic Organization (`10,003,452` nodes / `12.77M+` edges across `2,500` accounts)** | Ingested in `66.0 s` under **`1.98 GB`** peak lean memory (`6.28 GB` with full policy documents); `20,001`-node hub queries in **`0.017 ms`–`110.6 ms`** |
 | **Adversarial Policy & Guardrail Synthesis Stress Test** | `0.12 ms` hot / `0.14 ms` cold single-decision latency on nested-wildcard 4-tier SCPs; blocked **`25 / 25`** simultaneous 8-hop exploit paths while retaining **`500 / 500` (`100%`)** benign actions in **`1.07 s`** |
-| **`1,000`-Principal Adversarial Decoy Torture (`50` buried chains + `950` hostile look-alikes)** | **`50 / 50` (`100%`)** recall (`2–6` hops, `Allow NotAction`, `${aws:PrincipalTag/...}`, `PassRole`, boundary removal), **`0 / 950` (`0.00%`)** false positives across `8` trap classes, **`50 / 50`** boundaries synthesized with **`50 / 50`** benign grants intact, **`8.98×` sweep speedup (`90.2 s`)**, and **`6.76×` CI gate speedup (`69.7 s` across `1,293` principals)** |
+| **`1,000`-Principal Adversarial Decoy Torture (`50` buried chains + `950` hostile look-alikes)** | **`50 / 50` (`100%`)** recall (`2–6` hops, `Allow NotAction`, `${aws:PrincipalTag/...}`, `PassRole`, boundary removal), **`0 / 950` (`0.00%`)** false positives across `8` trap classes, **`50 / 50`** boundaries synthesized with **`50 / 50`** benign grants intact, **`0.061 s` (`61 ms`) sweep** (`13,194×` vs baseline), and **`4.57 s` CI gate** across `1,293` principals (`103×` vs baseline) |
 
 **Sanitized Benchmark JSON Teasers:** [`57-path-scanner-matrix.json`](./proof/benchmarks/57-path-scanner-matrix.json) · [`57-path-bastion-comparison.json`](./proof/benchmarks/57-path-bastion-comparison.json) · [`iam-vulnerable-cloudgoat-comparison.json`](./proof/benchmarks/iam-vulnerable-cloudgoat-comparison.json) · [`10m-node-scale-stress.json`](./proof/benchmarks/10m-node-scale-stress.json) · [`10m-node-memory-profile.json`](./proof/benchmarks/10m-node-memory-profile.json) · [`1000-principal-decoy-torture.json`](./proof/benchmarks/1000-principal-decoy-torture.json)
 
