@@ -25,7 +25,7 @@ Every cloud security scanner can hand your team ten thousand IAM alerts. Almost 
 | **3-Round Adversarial Red-Team Hardening** | **`55/55` findings closed** (`0` CRITICAL / `0` HIGH / `0` MEDIUM) · **`11/11` live AWS wire parity** (`AssumeRole`+`Tags`, mint/tag forgery, non-widening compression) | **`0` regressions across `930` unit tests** |
 | **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.014 ms` hot SCP) · `1,000`-principal torture: **`50/50` recall in `0.061 s` (`61 ms`)** (`4.57 s` CI gate over `1,293` principals) | **`0 / 950` (`0.00%`) false positives** |
 | **GCP Live Control-Plane & Carrier Containment (`GAUNTLET-100`)** | **`77/77` gauntlet paths closed** (4-hop diamond SA chains, Cloud Run v2 carrier, WIF `principalSet://`, ABAC, `denyAdmin`) → **`HTTP 403`** · **`100`-SA / `1,000`-binding scale in `1.98 s`** | **`4/4` benign GCS/KMS/Secret/Run `200` (`Δ = 0`)**, `0` leaked |
-| **GCP External Benchmarks (Stratus Red Team & Cloud Attack Range)** | Stratus Red Team: **`4/4` measured GCP TTPs blocked (`HTTP 403`)** · Cloud Attack Range: **`100%` (`11/11` deployed routes)** with **`0` false positives** · **`1M`-node / `10.05M`-edge GCP scale (`14.00 s` sweep, `5.51 GiB` peak RSS)** | **`571` GCP unit tests + `36/36` E2E syntheses + `10/10` messy-GCP edge cases PASS** |
+| **GCP External Benchmarks (Stratus Red Team & Cloud Attack Range)** | Stratus Red Team: **`4/4` measured GCP TTPs blocked (`HTTP 403`)** · Cloud Attack Range: **`100%` (`11/11` deployed routes)** with **`0` false positives** · **`1M`-node / `10.05M`-edge GCP scale (`14.00 s` sweep, `5.51 GiB` peak RSS)** | **`574` GCP unit tests + `36/36` E2E syntheses + `10/10` messy-GCP edge cases PASS** |
 
 ---
 
@@ -193,7 +193,7 @@ Bastion brings the same zero-collateral, semantics-first engine to **Google Clou
 - **Pre-Merge Split-Brain CI/CD Gate (`Terraform PR + Live GCP Drift`):** Composes Terraform plans and HCL (including authoritative `*_iam_policy` resources and unexpanded `for_each`/`count` loop detection) with live GCP drift to catch newly introduced multi-hop escalations before merge, outputs **SARIF 2.1.0** for GitHub Code Scanning, and automatically synthesizes non-breaking guardrails.
 - **External GCP Benchmarks & Scale:**
   - **Datadog Stratus Red Team (GCP):** **`4/4`** measured live IAM/persistence TTPs (`create-service-account-key`, `backdoor-service-account-policy`, `create-admin-service-account`, `invite-external-user`) discovered and blocked live after remediation (**`HTTP 403`**, `0` leaked resources; `impersonate-service-accounts` unmeasured due to an upstream Terraform provider warmup failure).
-  - **BugBase Cloud Attack Range (BAR GCP):** **`100%` (`11/11` deployed in-scope routes, `25.0` weighted score; `2` undeployed preconditions skipped)** with **`0` false positives** and `0` leaked resources (verified on the `571`-test engine with live `compute.instances.aggregatedList` GCE workload ingestion).
+  - **BugBase Cloud Attack Range (BAR GCP):** **`100%` (`11/11` deployed in-scope routes, `25.0` weighted score; `2` undeployed preconditions skipped)** with **`0` false positives** and `0` leaked resources (verified on the `574`-test engine with live `compute.instances.aggregatedList` GCE workload ingestion).
   - **1,000,000-Node / 10.05M-Edge Messy GCP Scale Proof (`5.51 GiB` peak RSS):** Validated across `1,000,000` hierarchy nodes (`15,000` folders across 3 tiers, `150,000` projects, `300,000` service accounts, `150,000` workloads, `384,999` buckets), `1,893,876` graph nodes, and **`10,046,557` edges** — completing escalation-path sweep in **`14.00 s`**, multi-hop probes in **`23.81 s`**, and **`10/10` real-world messy-GCP edge cases** (`deleted:` tombstoned principals, Org Policy v2 `dryRunSpec`/`reset`/`inheritFromParent`, conditional vs. unconditional overlap, WIF vs. `allAuthenticatedUsers`, nested-group Deny v2, and PAB boundaries).
   - **Offline 100-SA / 1,000-Binding Scale Gate:** Closed `50` escalation paths to `0` residual in **`1.98 s`** (`quotas_ok=True`, `0` broken benign).
 
@@ -224,6 +224,10 @@ Bastion fits directly into existing cloud security and platform engineering work
 1. **Stage 1 — Read-Only Discovery & Risk Proof:** Connect read-only IAM and CloudTrail telemetry to surface verified, genuinely exploitable multi-hop paths alongside zero-collateral remediation proposals — modifying zero cloud resources.
 2. **Stage 2 — Verified Non-Breaking Containment:** Roll out minimal, self-defending guardrails across high-risk identities and converging paths, validated against observed production traffic.
 3. **Stage 3 — Standing Pre-Merge Hybrid Gate:** Integrate Bastion into Terraform pull requests (with native SARIF output for GitHub Code Scanning) to block split-brain `PR + Live Drift` escalations before merge.
+
+- **Zero-Privilege Read-Only Onboarding:** Ships with copy-paste IAM setup templates (`gcloud` and Terraform) scoped strictly to read-only viewer roles—no admin or write credentials required for Stage 1 diagnostics.
+- **Air-Gapped Offline Snapshot Mode (`--network=none`):** Supports ingesting offline `gcloud asset export` snapshots (NDJSON/JSON) alongside Terraform plans with zero live cloud API credentials or outbound network access.
+- **Paired Rollback Commands on Every Fix:** Every generated guardrail includes ready-to-run CLI and Terraform revert commands so platform teams can roll back changes in one step during rollout.
 
 ---
 
