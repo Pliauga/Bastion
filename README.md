@@ -1,12 +1,12 @@
 # Bastion — No AI, No API Keys, No Hallucinations
 
-**Autonomous, Zero-Collateral AWS IAM Privilege Escalation Detection & Verified Remediation**
+**Autonomous, Zero-Collateral AWS & GCP IAM Privilege Escalation Detection & Verified Remediation**
 
-> **Closed-Source Commercial Software** — This repository is a public capability overview. Architecture documentation, live AWS execution recordings, and full verification dossiers are available to prospective enterprise buyers and security teams under NDA. **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com).
+> **Closed-Source Commercial Software** — This repository is a public capability overview. Architecture documentation, live AWS and GCP execution recordings, and full verification dossiers are available to prospective enterprise buyers and security teams under NDA. **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com).
 
-Every cloud security scanner can hand your team ten thousand IAM alerts. Almost none can tell you which multi-hop paths are **genuinely exploitable on live AWS**, and none can hand engineering a minimal, production-safe fix proven not to break running workloads.
+Every cloud security scanner can hand your team ten thousand IAM alerts. Almost none can tell you which multi-hop paths are **genuinely exploitable on live AWS or GCP**, and none can hand engineering a minimal, production-safe fix proven not to break running workloads.
 
-**Bastion closes the gap between finding an escalation chain and safely eliminating it.** It evaluates real AWS IAM authorization semantics across live cloud estates and pending Infrastructure-as-Code changes, proves which multi-step routes reach privileged targets, and generates targeted guardrails verified to block the escalation while keeping legitimate production traffic untouched.
+**Bastion closes the gap between finding an escalation chain and safely eliminating it.** It evaluates real AWS and GCP IAM authorization semantics across live cloud estates and pending Infrastructure-as-Code changes, proves which multi-step routes reach privileged targets, and generates targeted guardrails verified to block the escalation while keeping legitimate production traffic untouched.
 
 **Quick links:** [Executive CISO Brief](./proof/CISO_SUMMARY.md) · [Plain-English Enterprise Scenarios](./docs/EXECUTIVE_SCENARIOS.md) · [MITRE ATT&CK Coverage](./docs/MITRE_ATTACK_COVERAGE.md) · [Benchmark JSON Teasers](./proof/benchmarks/)
 
@@ -23,7 +23,9 @@ Every cloud security scanner can hand your team ten thousand IAM alerts. Almost 
 | **Escape Test Under `AdministratorAccess`** | **`15/15` escape attempts `HTTP 403`** from one assumed session (`16/16` parity) | **`100%` benign reads `200` (`Δ = 0`)** |
 | **33-Service & Layer-3 RBP Wire Proof** | **`16/16` live arms PASS** (`15/15` parity across SNS, ECR, EventBridge, DynamoDB, S3 + decoys) | **`100%` benign + exempt admin `200` (`Δ = 0`)** |
 | **3-Round Adversarial Red-Team Hardening** | **`55/55` findings closed** (`0` CRITICAL / `0` HIGH / `0` MEDIUM) · **`11/11` live AWS wire parity** (`AssumeRole`+`Tags`, mint/tag forgery, non-widening compression) | **`0` regressions across `930` unit tests** |
-| **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.014 ms` hot SCP) · `1,000`-principal torture: **`50/50` recall in `0.068 s`** (`5.09 s` CI gate over `1,293` principals) | **`0 / 950` (`0.00%`) false positives** |
+| **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.014 ms` hot SCP) · `1,000`-principal torture: **`50/50` recall in `0.061 s` (`61 ms`)** (`4.57 s` CI gate over `1,293` principals) | **`0 / 950` (`0.00%`) false positives** |
+| **GCP Live Control-Plane & Carrier Containment (`GAUNTLET-100`)** | **`77/77` gauntlet paths closed** (4-hop diamond SA chains, Cloud Run v2 carrier, WIF `principalSet://`, ABAC, `denyAdmin`) → **`HTTP 403`** · **`100`-SA / `1,000`-binding scale in `1.98 s`** | **`4/4` benign GCS/KMS/Secret/Run `200` (`Δ = 0`)**, `0` leaked |
+| **GCP External Benchmarks (Stratus Red Team & Cloud Attack Range)** | Stratus Red Team: **`4/4` measured GCP TTPs blocked (`HTTP 403`)** · Cloud Attack Range: **`100%` (`11/11` deployed routes)** with **`0` false positives** | **`562` GCP unit tests + `36/36` E2E syntheses PASS** |
 
 ---
 
@@ -181,6 +183,20 @@ Bastion is the **only** evaluated tool that identified the exact `AWSGoat` escal
 
 ---
 
+## Live GCP Verification & Multi-Layer Containment
+
+Bastion brings the same zero-collateral, semantics-first engine to **Google Cloud Platform (GCP)** across `Organization -> Folder -> Project -> Resource` hierarchies, Cloud Asset Inventory / REST / Terraform ingestion, and **6 remediation layers** (`IAM Deny v2`, `Allow Policy Narrowing`, `IAM Conditions / CEL`, `Organization Policy Guardrails`, `Principal Access Boundary (PAB)`, and `Custom Role Least-Privilege`):
+
+- **Exact GCP IAM & CEL Policy Semantics:** Accurately evaluates three-valued IAM Conditions and Deny v2 tag rules (`resource.matchTag`, `hasTagKeyId`), fail-closed Principal Access Boundary (PAB) scope checks, Org Policy v2 list constraints, cross-format principal normalization (`user:`, `serviceAccount:`, `principal://`, `principalSet://`), and `LockoutGuard` protection for break-glass admins and Google-managed service agents.
+- **12 GCP Workload Carriers & Multi-Hop Chains:** Separates inert `iam.serviceAccounts.actAs` bindings from executable multi-hop privilege-escalation chains across `12` GCP compute, serverless, workflow, data, and ML services (`10/10` corpus parity, `12/12` carrier prerequisites, `36/36` clean E2E syntheses, `0` decoy false positives).
+- **Live GCP `GAUNTLET-100` Scaled Proof (`$0.00` spend, `0` leaked resources):** Verified end-to-end against a live GCP project (`47` tracked resources): proved 4-hop diamond SA delegation/key-admin paths, live Cloud Run v2 carrier takeover (`HTTP 200`), WIF `principalSet://` attribute filtering (`attribute.env/prod` vs `dev`), ABAC tag-mutation detection, `denyAdmin` policy-mutation detection, and `apikeys.keys.create`/`storage.hmacKeys.create` — then closed **`77/77` gauntlet paths (`0` residual, `quotas_ok=True`)**, blocked live key creation and Cloud Run `PATCH` at **`HTTP 403 PERMISSION_DENIED`**, and kept GCS, Cloud KMS, Secret Manager, and Cloud Run `GET` workloads at **`HTTP 200` (`Δ Benign = 0`)**.
+- **External GCP Benchmarks & Scale:**
+  - **Datadog Stratus Red Team (GCP):** **`4/4`** measured live IAM/persistence TTPs (`create-service-account-key`, `backdoor-service-account-policy`, `create-admin-service-account`, `invite-external-user`) discovered and blocked live after remediation (**`HTTP 403`**, `0` leaked resources; `impersonate-service-accounts` unmeasured due to an upstream Terraform provider warmup failure).
+  - **BugBase Cloud Attack Range (BAR GCP):** **`100%` (`11/11` deployed in-scope routes, `25.0` weighted score; `2` undeployed preconditions skipped)** with **`0` false positives** and `0` leaked resources (verified on the `562`-test engine with live `compute.instances.aggregatedList` GCE workload ingestion).
+  - **Offline 100-SA / 1,000-Binding Scale Gate:** Closed `50` escalation paths to `0` residual in **`1.98 s`** (`quotas_ok=True`, `0` broken benign).
+
+---
+
 ## Independent Benchmarks & Enterprise Scale
 
 In addition to live AWS control-plane verification, Bastion is validated against published third-party escalation corpora and large-scale synthetic cloud estates:
@@ -218,8 +234,8 @@ Bastion maps its policy-evaluated authorization proofs directly onto the MITRE A
 ## Request an NDA Walkthrough & Live Demo
 
 Bastion is closed-source commercial software. For enterprise buyers, CISOs, and cloud security leaders interested in:
-- **Live AWS control-plane demonstration videos** and full technical verification dossiers
+- **Live AWS & GCP control-plane demonstration videos** and full technical verification dossiers
 - **Architecture & security review** under mutual NDA
-- **Read-only pilot evaluation** in a staging or production AWS environment
+- **Read-only pilot evaluation** in a staging or production AWS or GCP environment
 
 **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com)

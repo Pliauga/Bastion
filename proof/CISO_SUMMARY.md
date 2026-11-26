@@ -1,10 +1,10 @@
 # Executive Brief — Bastion for Cloud Security Leadership
 
-> **Closed-Source Commercial Software** — Full technical verification dossiers, live AWS demonstration recordings, and pilot scoping are available under NDA. **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com).
+> **Closed-Source Commercial Software** — Full technical verification dossiers, live AWS & GCP demonstration recordings, and pilot scoping are available under NDA. **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com).
 
 ## 1. The Problem in One Sentence
 
-IAM privilege escalation is a multi-hop authorization reachability problem, yet standard cloud scanners stop at noisy static alerts instead of delivering a minimal remediation that is **proven to block the attack on live AWS** and **proven not to break production**.
+IAM privilege escalation is a multi-hop authorization reachability problem, yet standard cloud scanners stop at noisy static alerts instead of delivering a minimal remediation that is **proven to block the attack on live AWS and GCP** and **proven not to break production**.
 
 ---
 
@@ -38,6 +38,16 @@ Bastion has been validated end-to-end against the live AWS control plane across 
 
 ---
 
+## 2b. Verified Live GCP Capabilities
+
+Bastion extends the same deterministic, zero-collateral verification engine to **Google Cloud Platform (GCP)** across `Organization -> Folder -> Project -> Resource` hierarchies and **6 remediation layers** (`IAM Deny v2`, `Allow Policy Narrowing`, `IAM Conditions / CEL`, `Organization Policy Guardrails`, `Principal Access Boundary (PAB)`, and `Custom Role Least-Privilege`):
+
+- **Live GCP `GAUNTLET-100` Scaled Proof (`0` Leaked Resources):** Validated live on GCP across 4-hop diamond service-account delegation/key-admin chains, live **Cloud Run v2** carrier takeover (`HTTP 200`), Workload Identity Federation (`principalSet://.../attribute.env/prod` vs `dev`), ABAC tag-mutation detection, `denyAdmin` policy-mutation detection, and `apikeys.keys.create`/`storage.hmacKeys.create` — closing **`77/77` gauntlet paths (`0` residual, `quotas_ok=True`)**, blocking live key creation and Cloud Run `PATCH` at **`HTTP 403 PERMISSION_DENIED`**, and preserving **`100%` of benign GCS, Cloud KMS, Secret Manager, and Cloud Run `GET` calls (`HTTP 200`, `Δ Benign = 0`)**.
+- **12 GCP Workload Carriers & Exact Semantic Modeling:** Separates inert `iam.serviceAccounts.actAs` bindings from executable multi-hop privilege-escalation chains across `12` GCP compute, serverless, workflow, data, and ML services with **`10/10` corpus parity**, **`36/36` clean E2E syntheses**, **`562` passing unit tests**, three-valued CEL evaluation, fail-closed PAB scope checks, and `LockoutGuard` anti-lockout protection for break-glass admins and Google-managed service agents.
+- **External GCP Benchmarks & Scale:** Blocked **`4/4`** measured live **Datadog Stratus Red Team** GCP IAM/persistence TTPs (`HTTP 403`, `0` leaked resources; `1` TTP unmeasured due to an upstream Terraform provider warmup failure), scored **`100%` (`11/11` deployed in-scope routes; `2` undeployed preconditions skipped)** with **`0` false positives** and `0` leaked resources on **BugBase Cloud Attack Range (GCP)**, and closed `50` paths across a **`100`-SA / `1,000`-binding** offline scale gate in **`1.98 s`** (`0` residual, `0` broken benign).
+
+---
+
 ## 3. Why Existing Tools Stall Remediation
 
 | Failure Mode of Alert-First Tools | Business Impact | Bastion Outcome |
@@ -62,7 +72,7 @@ Bastion deploys incrementally with zero initial disruption:
 
 ## 5. Request the Full NDA Verification Package
 
-To review live AWS control-plane demonstration videos, full technical verification evidence, or scope a read-only pilot in your AWS environment:
+To review live AWS & GCP control-plane demonstration videos, full technical verification evidence, or scope a read-only pilot in your cloud environment:
 
 **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com)
 
