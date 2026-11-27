@@ -1,8 +1,8 @@
-# Bastion: Four Scenarios for Security & Engineering Leaders
+# Auga IAM: Four Scenarios for Security & Engineering Leaders
 
 **Zero IAM jargon. Real live AWS outcomes.**
 
-Each scenario follows four simple beats: **the problem, the exploit, the outcome, and the fix.** Every outcome reflects live AWS control-plane verification; detailed evidence and demonstration recordings are available under NDA via [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com).
+Each scenario follows four simple beats: **the problem, the exploit, the outcome, and the fix.** Every outcome reflects live AWS control-plane verification; detailed evidence and demonstration recordings are available under NDA via [Ed@Pliauga.co.uk](mailto:Ed@Pliauga.co.uk).
 
 ---
 
@@ -16,11 +16,11 @@ Each scenario follows four simple beats: **the problem, the exploit, the outcome
 
 **The outcome.** On live AWS:
 - Scanning the Terraform pull request alone passed with `0` findings, and auditing the live account alone showed `0` reachable paths.
-- Evaluating the **combined state before merge**, Bastion caught the full multi-step escalation path, avoided the disruptive entry-identity cut that would have broken an active workflow, and generated a clean Terraform guardrail instead.
+- Evaluating the **combined state before merge**, Auga IAM caught the full multi-step escalation path, avoided the disruptive entry-identity cut that would have broken an active workflow, and generated a clean Terraform guardrail instead.
 - **Before the fix**, the live multi-step attack succeeded every time (`HTTP 200`).
-- **After applying Bastion's guardrail**, the admin hop failed every time (`HTTP 403 AccessDenied`) while **every legitimate production call kept succeeding (`HTTP 200`)** and the updated Terraform re-scanned clean.
+- **After applying Auga IAM's guardrail**, the admin hop failed every time (`HTTP 403 AccessDenied`) while **every legitimate production call kept succeeding (`HTTP 200`)** and the updated Terraform re-scanned clean.
 
-**The fix.** Bastion catches split-brain drift paths inside the pull request *before* merge and produces a tailored, zero-collateral guardrail straight in Terraform so engineering can ship safely without breaking downstream jobs.
+**The fix.** Auga IAM catches split-brain drift paths inside the pull request *before* merge and produces a tailored, zero-collateral guardrail straight in Terraform so engineering can ship safely without breaking downstream jobs.
 
 ---
 
@@ -34,10 +34,10 @@ Each scenario follows four simple beats: **the problem, the exploit, the outcome
 
 **The outcome.** Verified live on AWS:
 - Standard boundaries allowed open same-account resource-policy bypasses to download the crown-jewel object (`HTTP 200`).
-- With Bastion's hardened containment in place, **every open bypass flipped from `HTTP 200` to `HTTP 403`** while legitimate reads remained **`HTTP 200`**.
-- Under a live escape test with **full `AdministratorAccess` attached directly underneath Bastion's guardrail**, AWS refused every tampering and escape attempt — deleting the boundary, replacing it, editing it, creating unrestricted roles, and attaching admin policies — while still permitting legitimate scoped operations (`HTTP 200`).
+- With Auga IAM's hardened containment in place, **every open bypass flipped from `HTTP 200` to `HTTP 403`** while legitimate reads remained **`HTTP 200`**.
+- Under a live escape test with **full `AdministratorAccess` attached directly underneath Auga IAM's guardrail**, AWS refused every tampering and escape attempt — deleting the boundary, replacing it, editing it, creating unrestricted roles, and attaching admin policies — while still permitting legitimate scoped operations (`HTTP 200`).
 
-**The fix.** Bastion does not treat "boundary attached" as good enough. It detects real resource-policy bypass interactions, seals open bypasses, and hardens guardrails against tampering and unrestricted identity minting.
+**The fix.** Auga IAM does not treat "boundary attached" as good enough. It detects real resource-policy bypass interactions, seals open bypasses, and hardens guardrails against tampering and unrestricted identity minting.
 
 ---
 
@@ -53,10 +53,10 @@ Each scenario follows four simple beats: **the problem, the exploit, the outcome
 
 **The outcome.** Verified live on AWS:
 - With AWS-managed `PowerUserAccess` attached, `iam:CreateRole` returned `403`, yet **`sts:AssumeRole` into an operations admin role succeeded (`HTTP 200`)**.
-- After Bastion applied its tailored guardrail, **`sts:AssumeRole` flipped `200 -> 403` within seconds**, while all legitimate reads stayed **`HTTP 200`**.
-- Bastion achieved **`100%` parity with live AWS** across exclusion policies, case-sensitivity edge cases, harmless deny-exclusion decoys (`0` false alarms), and boundary-safe bucket exemptions.
+- After Auga IAM applied its tailored guardrail, **`sts:AssumeRole` flipped `200 -> 403` within seconds**, while all legitimate reads stayed **`HTTP 200`**.
+- Auga IAM achieved **`100%` parity with live AWS** across exclusion policies, case-sensitivity edge cases, harmless deny-exclusion decoys (`0` false alarms), and boundary-safe bucket exemptions.
 
-**The fix.** Bastion models exclusion and inversion policies with exact live AWS semantics — severing hidden `PowerUserAccess` and `NotAction` admin routes without breaking legitimate workloads or flagging safe guardrails.
+**The fix.** Auga IAM models exclusion and inversion policies with exact live AWS semantics — severing hidden `PowerUserAccess` and `NotAction` admin routes without breaking legitimate workloads or flagging safe guardrails.
 
 ---
 
@@ -70,17 +70,17 @@ Each scenario follows four simple beats: **the problem, the exploit, the outcome
 
 **The outcome.** Verified live across a populated multi-principal AWS account packed with hostile decoys and innocent service roles:
 - **Before the fix**, both parallel branches escalated live to admin (`HTTP 200`/`201`).
-- Bastion rejected the disruptive entry-role lockdown, closed **both parallel branches** with distinct per-branch guardrails applied through real Terraform workflows, flipped both live attack routes to **`HTTP 403`**, kept **`100%` of legitimate workload operations succeeding (`HTTP 200`/`201`)**, and re-audited the entire account to **`0` reachable admin paths** with **`0` false positives** on decoys or innocent fleet roles.
+- Auga IAM rejected the disruptive entry-role lockdown, closed **both parallel branches** with distinct per-branch guardrails applied through real Terraform workflows, flipped both live attack routes to **`HTTP 403`**, kept **`100%` of legitimate workload operations succeeding (`HTTP 200`/`201`)**, and re-audited the entire account to **`0` reachable admin paths** with **`0` false positives** on decoys or innocent fleet roles.
 
-**The fix.** When an attack graph branches, Bastion coordinates least-privilege containment across multiple identities automatically — delivering tailored, non-breaking guardrails straight into Terraform.
+**The fix.** When an attack graph branches, Auga IAM coordinates least-privilege containment across multiple identities automatically — delivering tailored, non-breaking guardrails straight into Terraform.
 
 ---
 
-## See Bastion Live Under NDA
+## See Auga IAM Live Under NDA
 
-Want to see the live AWS demonstration recordings or test Bastion read-only against your own cloud architecture?
+Want to see the live AWS demonstration recordings or test Auga IAM read-only against your own cloud architecture?
 
-**Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com)
+**Contact:** [Ed@Pliauga.co.uk](mailto:Ed@Pliauga.co.uk)
 
 ---
 

@@ -1,12 +1,12 @@
-# Bastion — No AI, No API Keys, No Hallucinations
+# Auga IAM — No AI, No API Keys, No Hallucinations
 
 **Autonomous, Zero-Collateral AWS & GCP IAM Privilege Escalation Detection & Verified Remediation**
 
-> **Closed-Source Commercial Software** — This repository is a public capability overview. Architecture documentation, live AWS and GCP execution recordings, and full verification dossiers are available to prospective enterprise buyers and security teams under NDA. **Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com).
+> **Closed-Source Commercial Software** — This repository is a public capability overview. Architecture documentation, live AWS and GCP execution recordings, and full verification dossiers are available to prospective enterprise buyers and security teams under NDA. **Contact:** [Ed@Pliauga.co.uk](mailto:Ed@Pliauga.co.uk).
 
 Every cloud security scanner can hand your team ten thousand IAM alerts. Almost none can tell you which multi-hop paths are **genuinely exploitable on live AWS or GCP**, and none can hand engineering a minimal, production-safe fix proven not to break running workloads.
 
-**Bastion closes the gap between finding an escalation chain and safely eliminating it.** It evaluates real AWS and GCP IAM authorization semantics across live cloud estates and pending Infrastructure-as-Code changes, proves which multi-step routes reach privileged targets, and generates targeted guardrails verified to block the escalation while keeping legitimate production traffic untouched.
+**Auga IAM closes the gap between finding an escalation chain and safely eliminating it.** It evaluates real AWS and GCP IAM authorization semantics across live cloud estates and pending Infrastructure-as-Code changes, proves which multi-step routes reach privileged targets, and generates targeted guardrails verified to block the escalation while keeping legitimate production traffic untouched.
 
 **Quick links:** [Executive CISO Brief](./proof/CISO_SUMMARY.md) · [Plain-English Enterprise Scenarios](./docs/EXECUTIVE_SCENARIOS.md) · [MITRE ATT&CK Coverage](./docs/MITRE_ATTACK_COVERAGE.md) · [Benchmark JSON Teasers](./proof/benchmarks/)
 
@@ -19,13 +19,14 @@ Every cloud security scanner can hand your team ten thousand IAM alerts. Almost 
 | **Prompt-Injected AI Coding Agents** | `4/4` rogue pivots (`200`) → **`8/8` blocked (`HTTP 403`)** | **`2/2` dev workflows `200` (`Δ = 0`)** |
 | **Zero-Downtime Incident Response** | Compromised CI/CD role contained **in place** (`8/8` `403`, stolen token blocked) | **`59/59` live prod calls `200` (`0` downtime)** |
 | **Third-Party SaaS Vendor Roles** | `8/8` vendor breach vectors `403` + wrong `ExternalId` rejected (`403`) | **`2/2` telemetry calls `200` (`Δ = 0`)** |
-| **AWS IAM Access Analyzer Blind Spots** | Access Analyzer: **`0` findings** across `6` resources → Bastion: **`4/4` caught & closed** | **`100%` benign survival (`Δ = 0`)** |
+| **AWS IAM Access Analyzer Blind Spots** | Access Analyzer: **`0` findings** across `6` resources → Auga IAM: **`4/4` caught & closed** | **`100%` benign survival (`Δ = 0`)** |
 | **Escape Test Under `AdministratorAccess`** | **`15/15` escape attempts `HTTP 403`** from one assumed session (`16/16` parity) | **`100%` benign reads `200` (`Δ = 0`)** |
 | **33-Service & Layer-3 RBP Wire Proof** | **`16/16` live arms PASS** (`15/15` parity across SNS, ECR, EventBridge, DynamoDB, S3 + decoys) | **`100%` benign + exempt admin `200` (`Δ = 0`)** |
-| **3-Round Adversarial Red-Team Hardening** | **`55/55` findings closed** (`0` CRITICAL / `0` HIGH / `0` MEDIUM) · **`11/11` live AWS wire parity** (`AssumeRole`+`Tags`, mint/tag forgery, non-widening compression) | **`0` regressions across `930` unit tests** |
+| **3-Round Adversarial Red-Team Hardening** | **`55/55` findings closed** (`0` CRITICAL / `0` HIGH / `0` MEDIUM) · **`11/11` live AWS wire parity** (`AssumeRole`+`Tags`, mint/tag forgery, non-widening compression) | **`0` regressions across the full verification suite** |
+| **Live AWS Organization Stress & Compression** | **`26/26` first-attempt live org parity** (`FeatureSet=ALL`, multi-OU tree validation) · **`69,556 → 3,603` chars** (`500` objects / `519` grants, scaling to **`1,000+`**) | **`33/33` steady-state prod calls `200`**, `0` leaks, `0` decoy FPs |
 | **Enterprise Scale & Decoy Precision** | `10,003,452` nodes (`1.98 GB`, `0.014 ms` hot SCP) · `1,000`-principal torture: **`50/50` recall in `0.061 s` (`61 ms`)** (`4.57 s` CI gate over `1,293` principals) | **`0 / 950` (`0.00%`) false positives** |
 | **GCP Live Control-Plane & Carrier Containment (`GAUNTLET-100`)** | **`77/77` gauntlet paths closed** (4-hop diamond SA chains, Cloud Run v2 carrier, WIF `principalSet://`, ABAC, `denyAdmin`) → **`HTTP 403`** · **`100`-SA / `1,000`-binding scale in `1.98 s`** | **`4/4` benign GCS/KMS/Secret/Run `200` (`Δ = 0`)**, `0` leaked |
-| **GCP External Benchmarks (Stratus Red Team & Cloud Attack Range)** | Stratus Red Team: **`4/4` measured GCP TTPs blocked (`HTTP 403`)** · Cloud Attack Range: **`100%` (`11/11` deployed routes)** with **`0` false positives** · **`1M`-node / `10.05M`-edge GCP scale (`14.00 s` sweep, `5.51 GiB` peak RSS)** | **`574` GCP unit tests + `36/36` E2E syntheses + `10/10` messy-GCP edge cases PASS** |
+| **GCP External Benchmarks (Stratus Red Team & Cloud Attack Range)** | Stratus Red Team: **`4/4` measured GCP TTPs blocked (`HTTP 403`)** · Cloud Attack Range: **`100%` (`11/11` deployed routes)** with **`0` false positives** · **`1M`-node / `10.05M`-edge GCP scale (`14.00 s` sweep, `5.51 GiB` peak RSS)** | **`577` GCP unit tests + `36/36` E2E syntheses + `10/10` messy-GCP edge cases PASS** |
 
 ---
 
@@ -37,27 +38,27 @@ Alert-first posture tools and static IaC linters fail security teams in three pr
 2. **Real AWS semantics break naive models.** Standard scanners — and even AWS's own policy simulator — diverge from live AWS control-plane enforcement on exclusion policies, condition-operator edge cases, dynamic policy variables, session-tag smuggling, and resource-policy boundary bypasses.
 3. **Locking down the wrong identity breaks production.** Remediation dies in Jira when security proposes a blanket restriction on a shared entry role without proving zero collateral impact across observed production workloads.
 
-Bastion was engineered to solve all three — verified end-to-end against the live AWS control plane.
+Auga IAM was engineered to solve all three — verified end-to-end against the live AWS control plane.
 
 ---
 
 ## Verified Capabilities
 
 ### 1. Live AWS Control-Plane Containment With Zero Broken Production Workflows
-Bastion does not stop at static findings. Every remediation it produces is designed to sever the exact escalation path while preserving legitimate business operations:
-- **End-to-end live enforcement:** Across live AWS validation scenarios covering serverless pipelines, transitive multi-hop role chains, multi-service compute carriers, converging multi-branch escalation graphs, and dynamic policy traps, every planted escalation succeeded live before remediation (`HTTP 200`/`201`) and was blocked live after Bastion's guardrail (`HTTP 403`) — with **`100%` of legitimate production workloads continuing uninterrupted (`HTTP 200`/`201`)**.
+Auga IAM does not stop at static findings. Every remediation it produces is designed to sever the exact escalation path while preserving legitimate business operations:
+- **End-to-end live enforcement:** Across live AWS validation scenarios covering serverless pipelines, transitive multi-hop role chains, multi-service compute carriers, converging multi-branch escalation graphs, and dynamic policy traps, every planted escalation succeeded live before remediation (`HTTP 200`/`201`) and was blocked live after Auga IAM's guardrail (`HTTP 403`) — with **`100%` of legitimate production workloads continuing uninterrupted (`HTTP 200`/`201`)**.
 - **Repeatable, deterministic enforcement:** Repeated live apply-and-release cycles produced identical containment placement every time, enforcing live blocks within seconds (`~10–12s` typical IAM propagation).
 
 ### 2. Split-Brain Pre-Merge Detection (`Terraform PR + Live AWS Drift`)
 A pull request can pass every IaC security scanner (`0` findings), and your live AWS account can pass every posture scanner (`0` paths) — yet merging the two creates a live multi-hop route straight to administrator access.
-- **Hybrid composition before merge:** Bastion evaluates proposed Terraform changes together with the live AWS authorization graph, catching split-brain drift escalations *before* merge and generating non-breaking Terraform guardrails that resolve the path cleanly.
+- **Hybrid composition before merge:** Auga IAM evaluates proposed Terraform changes together with the live AWS authorization graph, catching split-brain drift escalations *before* merge and generating non-breaking Terraform guardrails that resolve the path cleanly.
 
 ### 3. Multi-Branch & Multi-Hop Placement Without Collateral Damage
 Real cloud graphs branch and converge. Locking down a shared entry identity breaks active workflows; locking down only one branch leaves an alternate route open.
-- **Zero-collateral containment across complex graphs:** Bastion evaluates multi-hop chains and converging diamond graphs against observed production activity (including implicit downstream service calls captured from CloudTrail, such as Secrets Manager's implicit KMS decryption), automatically rejecting collateral-breaking cuts and placing tailored per-identity guardrails that close every route to admin with zero workload disruption.
+- **Zero-collateral containment across complex graphs:** Auga IAM evaluates multi-hop chains and converging diamond graphs against observed production activity (including implicit downstream service calls captured from CloudTrail, such as Secrets Manager's implicit KMS decryption), automatically rejecting collateral-breaking cuts and placing tailored per-identity guardrails that close every route to admin with zero workload disruption.
 
 ### 4. Exact Live AWS Semantics Where Standard Scanners & Simulators Diverge
-Bastion models the live AWS authorization engine across the subtle policy constructs that break conventional scanners:
+Auga IAM models the live AWS authorization engine across the subtle policy constructs that break conventional scanners:
 - **Permissions-Boundary bypasses & self-defence:** Detects when same-account resource policies bypass standard Permissions Boundaries, seals open bypasses while keeping legitimate reads active, and hardens containment boundaries to withstand live escape and self-tampering attempts even with `AdministratorAccess` attached directly underneath.
 - **Exclusion & inversion policies (`PowerUserAccess`, `NotAction`, `NotResource`, `NotPrincipal`):** Accurately identifies hidden escalation paths inside allow-by-exclusion policies like AWS-managed `PowerUserAccess`, stays silent on safe deny-exclusion guardrails, and catches boundary-breaking `NotPrincipal` traps before they cause outages.
 - **Condition-operator & absent-key algebra:** Accurately evaluates vacuous quantifiers (`ForAllValues`), `IfExists` modifiers, negated `Deny` semantics, case-folded keys versus exact values, and multi-valued tag sets — achieving **`100%` parity** against live AWS control-plane probes.
@@ -70,34 +71,35 @@ When dropped into an unfamiliar multi-principal account with zero path hints and
 - **`100%` recall on planted multi-hop chains** with **`0` false positives** across hostile decoys and innocent service roles.
 
 ### 6. Coordinated Multi-Layer Containment & Adversarial Evasion Resilience
-When a single guardrail layer leaves an alternate route open — such as a resource-policy bypass alongside an identity flaw and a federated trust trap — Bastion coordinates containment across **Permissions Boundaries, Trust Policies, and Resource Policies simultaneously**:
+When a single guardrail layer leaves an alternate route open — such as a resource-policy bypass alongside an identity flaw and a federated trust trap — Auga IAM coordinates containment across **Permissions Boundaries, Trust Policies, and Resource Policies simultaneously**:
 - **Coordinated 3-layer live enforcement:** Verified end-to-end on live AWS by closing identity escalation, trust-policy exposure, and a same-account session-ARN S3 resource-policy bypass in one unified remediation pass — blocking every attack path (`HTTP 403`) while keeping legitimate workloads running (`HTTP 200`, zero collateral breakage).
 - **Adversarial evasion & decoy precision (`100%` Recall, `0` False Positives):** Catches obfuscated `Allow NotAction`, `NotResource` exclusions, tag-interpolated `${aws:PrincipalTag/...}` targets, and `iam:PassedToService` multi-service grants live on AWS (`HTTP 200`/`201` → `403`), while staying completely silent on matched inert decoys (safe `Deny NotAction` guardrails, mismatched `iam:PassedToService` preconditions, and identical variable policies bound to non-privileged tags).
 
 ### 7. Live Multi-Account AWS Organizations Governance & Pagination Scale
-- **Live multi-account Organization verification (`SCP + RCP + Permissions Boundary + Resource Policy`):** Verified live across a Management and Member AWS Organization (`100%` recall, `0` false positives): recognized when an OU Service Control Policy already blocked an apparent IAM escalation (`HTTP 403`), closed cross-account `sts:AssumeRole` and session-ARN S3/SQS resource-policy bypasses (`HTTP 200` → `403`, plus **`22/22` live parity** across `iam`, `sts`, `s3`, `lambda`, `sqs`, `sns`, and `ecr` with `0` decoy FPs) under coordinated four-layer enforcement, and kept both same-account and cross-account production reads intact (`HTTP 200`, zero collateral breakage).
-- **Structural AWS Organizations `RCP` Lambda exemption caught & plugged live:** Under one live Organization Resource Control Policy (`RCP`) attached to a member account, **`sqs:ReceiveMessage` (`403`)** and **`s3:GetObject` (`403`)** were blocked by the RCP while **`lambda:InvokeFunction` (`200`)** bypassed the exact same RCP because AWS rejects `lambda:InvokeFunction` inside RCP documents (`MalformedPolicyDocumentException`). Bastion modeled this exact 85-service RCP boundary, flagged the unblocked Lambda path, and plugged it in-place via the caller's permissions boundary (`HTTP 200 → 403`, verified by counterfactual boundary removal, `Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources).
+- **Live multi-account Organization verification (`SCP + RCP + Permissions Boundary + Resource Policy`):** Verified live across a Management and Member AWS Organization (`100%` recall, `0` false positives): recognized when an OU Service Control Policy already blocked an apparent IAM escalation (`HTTP 403`), closed cross-account `sts:AssumeRole` and session-ARN S3/SQS resource-policy bypasses (`HTTP 200` → `403`, plus **`26/26` first-attempt live org parity** across `iam`, `sts`, `s3`, `lambda`, `sqs`, `sns`, `ecr`, `dynamodb`, and `backup` with `0` decoy FPs, `0` steady-state production heartbeat errors across `33` live calls, and **`16/16` live RBP/carrier arms PASS / `15/15` parity** across **33** AWS services) under coordinated four-layer enforcement, and kept both same-account and cross-account production reads intact (`HTTP 200`, zero collateral breakage).
+- **Structural AWS Organizations `RCP` exemptions & automatic paired fallback:** Under one live Organization Resource Control Policy (`RCP`) attached to a member account, **`sqs:ReceiveMessage` (`403`)** and **`s3:GetObject` (`403`)** were blocked by the RCP while **`lambda:InvokeFunction` (`200`)** bypassed the exact same RCP because AWS rejects `lambda:InvokeFunction` inside RCP documents (`MalformedPolicyDocumentException`). Where services sit outside AWS RCP reach (such as `iam` or `lambda`), Auga IAM surfaces the exact RCP boundary honestly and automatically synthesizes paired **SCP + Permissions Boundary** fallback containment (`HTTP 200 → 403`, verified by counterfactual boundary removal, `Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources).
+- **Atomic in-place cutover & deterministic denial attribution:** Guardrails update atomically via `CreatePolicyVersion(SetAsDefault=True)` without detaching active boundaries, verify convergence across both data-plane reads and slower policy-mutation APIs before declaring enforcement complete, and deterministically attribute every denial (`explicit_deny` vs. `implicit_deny`) to the exact denying layer and statement `Sid`.
 - **End-to-end compiled container proof:** Verified with compiled, offline (`--network=none --read-only`, `linux/amd64` & `linux/arm64`) containers against a live Management + Member Organization combining `Allow NotAction`, `${aws:PrincipalTag/...}` variables, a split-brain Terraform PR plan, CloudTrail traffic preservation, and live boundary self-defense (`HTTP 403` on self-removal)—achieving **`100%` recall (`0` decoy false positives), `10/10` live AWS parity, and `100%` benign workload survival (`Δ Benign = 0`)** across both accounts.
-- **Live `> 6,144`-character boundary compression (`8,867 → 586` & `13,531 → 5,580` chars):** Compressed an **`8,867`-character** policy surface down to **`586` characters**, and a **`74`-grant / `13,531`-character** multi-service surface down to **`5,580` characters in `13.1 ms`** (`74/74` grants preserved, zero write-wildcard widening such as `s3:*`/`kms:*`)—both accepted live by AWS under the `6,144`-character managed-policy hard limit, blocking **`8/8` attack vectors (`HTTP 403`, including explicit-deny refusal of `iam:CreatePolicy` targeting boundary-shaped names)** while keeping legitimate S3 reads/list/puts untouched (`HTTP 200`, `Δ Benign = 0`, `11/11` live AWS parity).
+- **Breaking AWS's `6,144`-character ceiling (`69,556 → 3,603` chars, scaling to `1,000+` objects):** Exact bipartite biclique compression fits up to `73` distinct numbered objects (`92` grants → `6,136` chars in `15` statements, `100%` lossless) under AWS's `6,144`-character managed-policy limit; beyond that, formally verified prefix-guarded compression collapses **`500` objects / `519` grants (`69,556` raw chars) down to `3,603` chars** (and **`1,000` objects / `1,019` grants down to `3,603` chars**) with `100%` of benign grants preserved and `0` escalation or crown-resource leaks.
 - **Multi-page estate scale & fail-closed telemetry:** Verified across multi-page (`126`-role) live AWS IAM estates with `100%` recall and `0` false positives across page boundaries, surfacing restricted read permissions explicitly rather than silently masking blind spots.
 - **Federation, EKS Pod Identity & path-qualified principals:** Proved live AWS enforcement across OIDC trust hardening (`0` post-patch traps), EKS Pod Identity `sts:TagSession` + transitive `aws:RequestTag/*` validation (`HTTP 200` valid tags vs. `403` spoofed/untagged), and multi-segment IAM role paths (`aws:PrincipalArn`) where pathless patterns silently miss.
 - **KMS anti-lockout, 9-service resource-policy & AI/CI carrier coverage, and shadow vectors:** Synthesized KMS key-policy guardrails accepted live by AWS with `BypassPolicyLockoutSafetyCheck=False` (where naive lockouts fail `MalformedPolicyDocumentException`), verified live containment (`HTTP 200` → `403`, `Δ Benign = 0`) across `iam:SetDefaultPolicyVersion` policy rollback, `iam:AddUserToGroup`, `iam:CreateAccessKey`, `iam:DeleteUserPermissionsBoundary`, `PassRole`-free `lambda:UpdateFunctionCode` solo hijack, and live 4-hop role-chaining severance (`6`-hop AWS chaining ceiling), and verified **`20/20` (`100%`) recall with `0/16` (`0.00%`) decoy false positives** across **Secrets Manager, SQS, SNS, ECR, Lambda resource policies** (with KMS key decryption, `ecr:GetAuthorizationToken`, and `aws:SourceArn` trigger decoy filtering) and **CodeBuild, Step Functions, SageMaker, and EventBridge Scheduler** carriers.
-- **Side-by-side AWS IAM Access Analyzer blind-spot showdown:** On live AWS across four real attack classes (same-account multi-hop chain, dormant `SetDefaultPolicyVersion` rollback, `${aws:PrincipalTag/...}` variable escalation, and session-ARN S3 boundary bypass), **AWS IAM Access Analyzer reported `0` findings across `6` scanned resources**, while **Bastion caught `4/4` (`0` decoy false positives)** and closed every path live (`HTTP 200` → `403`, `Δ Benign = 0`).
+- **Side-by-side AWS IAM Access Analyzer blind-spot showdown:** On live AWS across four real attack classes (same-account multi-hop chain, dormant `SetDefaultPolicyVersion` rollback, `${aws:PrincipalTag/...}` variable escalation, and session-ARN S3 boundary bypass), **AWS IAM Access Analyzer reported `0` findings across `6` scanned resources**, while **Auga IAM caught `4/4` (`0` decoy false positives)** and closed every path live (`HTTP 200` → `403`, `Δ Benign = 0`).
 
-- **Bounded `AdministratorAccess` `15`-vector escape test:** With **`AdministratorAccess` attached directly to a live AWS role** capped by a Bastion guardrail, **`15/15` live escape attempts** (`DeleteRolePermissionsBoundary`, `PutRolePermissionsBoundary`, `CreatePolicyVersion`, `SetDefaultPolicyVersion`, unbounded/bypassing `CreateRole`/`CreateUser`, `PutRolePolicy`, `AttachRolePolicy`, `UpdateAssumeRolePolicy`, `CreateAccessKey`, `AddUserToGroup`, `AssumeRole`, `PassRole` via `lambda:CreateFunction`, and protected S3 read) all bounced at **`HTTP 403`** from one assumed session (`16/16` live AWS parity) while legitimate reads stayed **`HTTP 200` (`Δ Benign = 0`)**.
+- **Bounded `AdministratorAccess` `15`-vector escape test:** With **`AdministratorAccess` attached directly to a live AWS role** capped by a Auga IAM guardrail, **`15/15` live escape attempts** (`DeleteRolePermissionsBoundary`, `PutRolePermissionsBoundary`, `CreatePolicyVersion`, `SetDefaultPolicyVersion`, unbounded/bypassing `CreateRole`/`CreateUser`, `PutRolePolicy`, `AttachRolePolicy`, `UpdateAssumeRolePolicy`, `CreateAccessKey`, `AddUserToGroup`, `AssumeRole`, `PassRole` via `lambda:CreateFunction`, and protected S3 read) all bounced at **`HTTP 403`** from one assumed session (`16/16` live AWS parity) while legitimate reads stayed **`HTTP 200` (`Δ Benign = 0`)**.
 - **Expanded 33-service & 17-policy live wire coverage:** Extended attack-graph and non-passing carrier precision across **33 AWS services** (including ECS `enableExecuteCommand` task-role scoping, EKS Access Entries + Pod Identity, IAM Identity Center Permission Sets, Glue, EMR / EMR Serverless, App Runner, CodeDeploy, EventBridge, Bedrock, Cognito Identity, IAM Roles Anywhere, and DynamoDB) and **17 policy/resource-policy synthesis types** (including SNS, ECR, Lambda, EventBridge, and DynamoDB resource policies with AWS-service anti-lockout guards), verified live on AWS (`16/16` arms PASS, `15/15` live parity, `0` decoy false positives, `0` leaked resources).
 - **Three-round adversarial red-team hardening (`55/55` closed, `11/11` live wire parity):** Subjected the entire guardrail and synthesis engine to three consecutive independent adversarial red-team audits (`0 CRITICAL / 0 HIGH / 0 MEDIUM` remaining), verifying live on AWS (`11/11` parity, `$0.00` spend, `0` leaked resources) that caller-supplied `aws:RequestTag` forgery on `CreateRole`, case-folded `aws:TagKeys` bypasses on `TagRole`/`UntagRole` and live `sts:AssumeRole` session-tag hops, wildcard trust/DynamoDB principal variants, ECR `Resource`-element rejections, and cross-bucket/cross-key boundary compression widening are all blocked while benign workloads remain **`HTTP 200`**.
 
 ### 8. Live Operational Containment: AI Agents, Zero-Downtime IR & Third-Party Vendors
-- **Prompt-injected AI coding-agent containment (live AWS):** Provisioned an over-privileged AI agent role (`Allow NotAction` developer authority excluding only `organizations:*` / `account:*`) where **`4/4` prompt-injected rogue actions succeeded (`HTTP 200`)**, including `sts:AssumeRole` into a production administrator role and reading a protected production S3 object; Bastion ingested the live account, synthesized a **5-statement** guardrail, and blocked **`8/8` rogue escalation and persistence vectors (`HTTP 403`)**—including `iam:CreateRole`, `iam:DeleteRolePermissionsBoundary`, `lambda:CreateFunction`, `iam:PutRolePolicy`, `iam:CreateAccessKey`, `s3:PutBucketPolicy`, `sts:AssumeRole`, and production S3 read—while keeping **`2/2` legitimate developer S3 workflows at `HTTP 200` (`Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources)**.
-- **Zero-downtime incident-response containment (live AWS):** Provisioned a live compromised CI/CD release-runner role (`Allow NotAction`) with a continuous `1.0s` production S3 heartbeat (`59` calls across pre-containment, in-place guardrail attachment, and post-containment) using the runner's **original** session (`0` credential rotation or role deletion); **`4/4` attacker moves succeeded pre-containment (`HTTP 200`)**, Bastion attached its synthesized **6-statement** guardrail **in place** with **`0` downtime errors across all `59` production calls**, neutralized the already-issued stolen session, blocked **`8/8` attacker vectors (`HTTP 403`)**, and kept **`3/3` legitimate CI/CD operations at `HTTP 200` (`Δ Benign = 0`, `11/11` live AWS parity, `0` leaked resources)**.
-- **Third-party SaaS / vendor integration containment (live AWS):** Provisioned an over-privileged SaaS vendor role (`Allow NotAction` + `sts:ExternalId` trust) where **`4/4` pre-containment pivots succeeded (`HTTP 200`)**, including assuming an organization administrator role and reading customer PII; Bastion attached its synthesized **5-statement** guardrail **in place** (`no revocation`, `no rotation`), confirmed confused-deputy rejection (`wrong ExternalId` → `HTTP 403`), blocked **`8/8` vendor breach vectors (`HTTP 403`)**, and kept **`2/2` legitimate telemetry S3 calls at `HTTP 200` (`Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources)**.
+- **Prompt-injected AI coding-agent containment (live AWS):** Provisioned an over-privileged AI agent role (`Allow NotAction` developer authority excluding only `organizations:*` / `account:*`) where **`4/4` prompt-injected rogue actions succeeded (`HTTP 200`)**, including `sts:AssumeRole` into a production administrator role and reading a protected production S3 object; Auga IAM ingested the live account, synthesized a **5-statement** guardrail, and blocked **`8/8` rogue escalation and persistence vectors (`HTTP 403`)**—including `iam:CreateRole`, `iam:DeleteRolePermissionsBoundary`, `lambda:CreateFunction`, `iam:PutRolePolicy`, `iam:CreateAccessKey`, `s3:PutBucketPolicy`, `sts:AssumeRole`, and production S3 read—while keeping **`2/2` legitimate developer S3 workflows at `HTTP 200` (`Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources)**.
+- **Zero-downtime incident-response containment (live AWS):** Provisioned a live compromised CI/CD release-runner role (`Allow NotAction`) with a continuous `1.0s` production S3 heartbeat (`59` calls across pre-containment, in-place guardrail attachment, and post-containment) using the runner's **original** session (`0` credential rotation or role deletion); **`4/4` attacker moves succeeded pre-containment (`HTTP 200`)**, Auga IAM attached its synthesized **6-statement** guardrail **in place** with **`0` downtime errors across all `59` production calls**, neutralized the already-issued stolen session, blocked **`8/8` attacker vectors (`HTTP 403`)**, and kept **`3/3` legitimate CI/CD operations at `HTTP 200` (`Δ Benign = 0`, `11/11` live AWS parity, `0` leaked resources)**.
+- **Third-party SaaS / vendor integration containment (live AWS):** Provisioned an over-privileged SaaS vendor role (`Allow NotAction` + `sts:ExternalId` trust) where **`4/4` pre-containment pivots succeeded (`HTTP 200`)**, including assuming an organization administrator role and reading customer PII; Auga IAM attached its synthesized **5-statement** guardrail **in place** (`no revocation`, `no rotation`), confirmed confused-deputy rejection (`wrong ExternalId` → `HTTP 403`), blocked **`8/8` vendor breach vectors (`HTTP 403`)**, and kept **`2/2` legitimate telemetry S3 calls at `HTTP 200` (`Δ Benign = 0`, `10/10` live AWS parity, `0` leaked resources)**.
 
 ---
 
 ## Sanitized Live AWS Control-Plane Excerpts
 
-Every refusal below is an anonymized excerpt from live AWS control-plane verification after Bastion's guardrail took effect (account IDs, resource names, and authorization tokens sanitized):
+Every refusal below is an anonymized excerpt from live AWS control-plane verification after Auga IAM's guardrail took effect (account IDs, resource names, and authorization tokens sanitized):
 
 **Serverless pipeline escalation contained while live Lambda & DynamoDB production writes continue (`HTTP 200`):**
 ```text
@@ -134,11 +136,11 @@ sts:AssumeRole on resource: arn:aws:iam::123456789012:role/ops-admin
 
 ## Head-to-Head Scanner Comparison (36-Scenario AWS IAM Semantics Suite)
 
-We evaluated Bastion side-by-side against five widely deployed open-source cloud IAM & Infrastructure-as-Code scanners on a balanced **36-scenario live-AWS-grounded benchmark** (`18` genuine multi-hop & semantic privilege escalations paired with `18` unexploitable look-alike decoys across `9` AWS IAM authorization domains). All scanners were scored strictly on findings targeting candidate principals/policies (excluding sink admin roles and generic password-policy/hygiene warnings):
+We evaluated Auga IAM side-by-side against five widely deployed open-source cloud IAM & Infrastructure-as-Code scanners on a balanced **36-scenario live-AWS-grounded benchmark** (`18` genuine multi-hop & semantic privilege escalations paired with `18` unexploitable look-alike decoys across `9` AWS IAM authorization domains). All scanners were scored strictly on findings targeting candidate principals/policies (excluding sink admin roles and generic password-policy/hygiene warnings):
 
 | Tool | Version | TP | FP | FN | TN | Precision | Recall | F1 Score | Verified Fix Synthesis |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Bastion** | Commercial | **`18`** | **`0`** | **`0`** | **`18`** | **`100.0%`** | **`100.0%`** | **`1.000`** | **Yes (Zero-Collateral)** |
+| **Auga IAM** | Commercial | **`18`** | **`0`** | **`0`** | **`18`** | **`100.0%`** | **`100.0%`** | **`1.000`** | **Yes (Zero-Collateral)** |
 | Principal Mapper (`pmapper`) | `1.1.5` | `15` | `3` | `3` | `15` | `83.3%` | `83.3%` | `0.833` | No (`0`) |
 | Checkov | `3.3.30` | `4` | `7` | `14` | `11` | `36.4%` | `22.2%` | `0.276` | No (`0`) |
 | Trivy | `0.76.0` | `2` | `1` | `16` | `17` | `66.7%` | `11.1%` | `0.190` | No (`0`) |
@@ -147,7 +149,7 @@ We evaluated Bastion side-by-side against five widely deployed open-source cloud
 
 - **IaC linters & static parsers** missed **`78%–89%`** of real multi-hop, scoped, and conditional escalations while flooding teams with false alarms on bounded roles and deny-exclusion guardrails.
 - **Even the strongest open-source graph tool (`pmapper`)** missed multi-hop version rewrites, policy-variable expansions, and ABAC preconditions while firing false positives on boundary-capped and inert policy constructs.
-- **Bastion** achieved **`100.0%` Precision (`0` false positives) and `100.0%` Recall (`0` misses)** — **`+0.167` F1 over `pmapper`** and **`+0.724` to `+0.818` F1 over Checkov, Trivy, Prowler IaC, and Cloudsplaining** — while uniquely synthesizing verified non-breaking remediations.
+- **Auga IAM** achieved **`100.0%` Precision (`0` false positives) and `100.0%` Recall (`0` misses)** — **`+0.167` F1 over `pmapper`** and **`+0.724` to `+0.818` F1 over Checkov, Trivy, Prowler IaC, and Cloudsplaining** — while uniquely synthesizing verified non-breaking remediations.
 
 ---
 
@@ -157,43 +159,44 @@ We also evaluated all **5 scanners** across **`92` modern multi-service AWS priv
 
 | Tool | Version | Tier 1 (IAM / STS, `22`) | Tier 2 (Compute, `37`) | Tier 3 (Modern Services, `33`) | Total (`92` Paths) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Bastion** | Commercial | **`22 / 22` (`100%`)** | **`37 / 37` (`100%`)** | **`33 / 33` (`100%`)** | **`92 / 92` (`100%`)** |
+| **Auga IAM** | Commercial | **`22 / 22` (`100%`)** | **`37 / 37` (`100%`)** | **`33 / 33` (`100%`)** | **`92 / 92` (`100%`)** |
 | Cloudsplaining | `0.9.1` | `21 / 22` (`95.5%`) | `29 / 37` (`78.4%`) | `10 / 33` (`30.3%`) | `60 / 92` (`65.2%`) |
 | Principal Mapper (`pmapper`) | `1.1.5` | `15 / 22` (`68.2%`) | `9 / 37` (`24.3%`) | `3 / 33` (`9.1%`) | `27 / 92` (`29.3%`) |
 | Checkov *(PE rule `CKV_AWS_286`)* | `3.3.30` | `16 / 22` (`72.7%`) | `8 / 37` (`21.6%`) | `2 / 33` (`6.1%`) | `26 / 92` (`28.3%`) |
 | Trivy | `0.76.0` | `3 / 22` (`13.6%`) | `0 / 37` (`0.0%`) | `0 / 33` (`0.0%`) | `3 / 92` (`3.3%`) |
 
-Bastion achieved **`100%` (`92 / 92`)** coverage across every IAM, STS, mainstream compute, and modern AWS service escalation path — outperforming Cloudsplaining by **`+34.8` points**, PMapper by **`+70.7` points**, Checkov's privilege-escalation rule by **`+71.7` points**, and Trivy by **`+96.7` points**.
+Auga IAM achieved **`100%` (`92 / 92`)** coverage across every IAM, STS, mainstream compute, and modern AWS service escalation path — outperforming Cloudsplaining by **`+34.8` points**, PMapper by **`+70.7` points**, Checkov's privilege-escalation rule by **`+71.7` points**, and Trivy by **`+96.7` points**.
 
 ---
 
 ## Zero-Collateral Remediation on `AWSGoat` & `TerraGoat`
 
-Alerting on IAM risk is half the problem — the real question for engineering and security leadership is *who can eliminate an escalation path without breaking running workloads?* We ran Bastion alongside the same open-source scanners against **INE's `AWSGoat` (`module-2`)** (an already-bounded ECS role escalating via `iam:PassRole` + `ec2:RunInstances` into an admin deployer role alongside active production traffic) and **Bridgecrew's `TerraGoat`** (broad service wildcards with zero IAM/STS escalation paths):
+Alerting on IAM risk is half the problem — the real question for engineering and security leadership is *who can eliminate an escalation path without breaking running workloads?* We ran Auga IAM alongside the same open-source scanners against **INE's `AWSGoat` (`module-2`)** (an already-bounded ECS role escalating via `iam:PassRole` + `ec2:RunInstances` into an admin deployer role alongside active production traffic) and **Bridgecrew's `TerraGoat`** (broad service wildcards with zero IAM/STS escalation paths):
 
 | Tool | `AWSGoat` Escalation Caught | `AWSGoat` Verified Non-Breaking Fix | `AWSGoat` Production Traffic Intact | `TerraGoat` False Escalation Alarms |
 | :--- | :---: | :---: | :---: | :---: |
-| **Bastion** | **Yes** *(full path)* | **Yes** *(re-scan clean)* | **`100%` (`3/3` workload calls)** | **`0`** |
+| **Auga IAM** | **Yes** *(full path)* | **Yes** *(re-scan clean)* | **`100%` (`3/3` workload calls)** | **`0`** |
 | Principal Mapper (`pmapper`) | Partial *(role-pair only)* | **No (`0`)** | `N/A` | `0` |
 | Checkov (`CKV_AWS_286`) | Static policy flags only | **No (`0`)** | `N/A` | **`1` false alarm** |
 | Cloudsplaining | Static policy flags *(flagged boundary)* | **No (`0`)** | `N/A` | **`2` false alarms** |
 | Trivy | **No** *(missed admin escalation)* | **No (`0`)** | `N/A` | `N/A` |
 
-Bastion is the **only** evaluated tool that identified the exact `AWSGoat` escalation path, generated a verified guardrail that closed the exploit on re-scan (`0` remaining paths), preserved **`100%` (`3/3`)** of observed ECS/SSM/EC2 production calls, and stayed silent (**`0` false alarms**) on `TerraGoat`'s non-escalating service policies.
+Auga IAM is the **only** evaluated tool that identified the exact `AWSGoat` escalation path, generated a verified guardrail that closed the exploit on re-scan (`0` remaining paths), preserved **`100%` (`3/3`)** of observed ECS/SSM/EC2 production calls, and stayed silent (**`0` false alarms**) on `TerraGoat`'s non-escalating service policies.
 
 ---
 
 ## Live GCP Verification & Multi-Layer Containment
 
-Bastion brings the same zero-collateral, semantics-first engine to **Google Cloud Platform (GCP)** across `Organization -> Folder -> Project -> Resource` hierarchies, Cloud Asset Inventory / REST / Terraform ingestion, and **6 remediation layers** (`IAM Deny v2`, `Allow Policy Narrowing`, `IAM Conditions / CEL`, `Organization Policy Guardrails`, `Principal Access Boundary (PAB)`, and `Custom Role Least-Privilege`):
+Auga IAM brings the same zero-collateral, semantics-first engine to **Google Cloud Platform (GCP)** across `Organization -> Folder -> Project -> Resource` hierarchies, Cloud Asset Inventory / REST / Terraform ingestion, and **6 remediation layers** (`IAM Deny v2`, `Allow Policy Narrowing`, `IAM Conditions / CEL`, `Organization Policy Guardrails`, `Principal Access Boundary (PAB)`, and `Custom Role Least-Privilege`):
 
 - **Exact GCP IAM & CEL Policy Semantics:** Accurately evaluates three-valued IAM Conditions and Deny v2 tag rules (`resource.matchTag`, `hasTagKeyId`), fail-closed Principal Access Boundary (PAB) scope checks, Org Policy v2 list constraints, cross-format principal normalization (`user:`, `serviceAccount:`, `principal://`, `principalSet://`), and `LockoutGuard` protection for break-glass admins and Google-managed service agents.
 - **12 GCP Workload Carriers & Multi-Hop Chains:** Separates inert `iam.serviceAccounts.actAs` bindings from executable multi-hop privilege-escalation chains across `12` GCP compute, serverless, workflow, data, and ML services (`10/10` corpus parity, `12/12` carrier prerequisites, `36/36` clean E2E syntheses, `0` decoy false positives).
 - **Live GCP `GAUNTLET-100` Scaled Proof (`$0.00` spend, `0` leaked resources):** Verified end-to-end against a live GCP project (`47` tracked resources): proved 4-hop diamond SA delegation/key-admin paths, live Cloud Run v2 carrier takeover (`HTTP 200`), WIF `principalSet://` attribute filtering (`attribute.env/prod` vs `dev`), ABAC tag-mutation detection, `denyAdmin` policy-mutation detection, and `apikeys.keys.create`/`storage.hmacKeys.create` — then closed **`77/77` gauntlet paths (`0` residual, `quotas_ok=True`)**, blocked live key creation and Cloud Run `PATCH` at **`HTTP 403 PERMISSION_DENIED`**, and kept GCS, Cloud KMS, Secret Manager, and Cloud Run `GET` workloads at **`HTTP 200` (`Δ Benign = 0`)**.
+- **Live GCP Messy-Production Wire Proof (`MESSY-PROD-LIVE-200`, `0` leaked resources):** Verified live on GCP across tombstoned service accounts (`deleted:serviceAccount:...`), overlapping conditional/unconditional bindings, `signJwt` impersonation, Cloud Run `PATCH` and GCE `setMetadata` carrier takeovers, custom-role `iam.roles.update`, and SA key creation — blocking **`5/5` live exploit vectors at `HTTP 403`** via SA policy narrowing and IAM Conditions (`ALLOW_CEL`) while keeping **`4/4` benign GCS, Secret Manager, Cloud KMS, and Cloud Run `GET` workloads at `HTTP 200` (`Δ Benign = 0`)**.
 - **Pre-Merge Split-Brain CI/CD Gate (`Terraform PR + Live GCP Drift`):** Composes Terraform plans and HCL (including authoritative `*_iam_policy` resources and unexpanded `for_each`/`count` loop detection) with live GCP drift to catch newly introduced multi-hop escalations before merge, outputs **SARIF 2.1.0** for GitHub Code Scanning, and automatically synthesizes non-breaking guardrails.
 - **External GCP Benchmarks & Scale:**
   - **Datadog Stratus Red Team (GCP):** **`4/4`** measured live IAM/persistence TTPs (`create-service-account-key`, `backdoor-service-account-policy`, `create-admin-service-account`, `invite-external-user`) discovered and blocked live after remediation (**`HTTP 403`**, `0` leaked resources; `impersonate-service-accounts` unmeasured due to an upstream Terraform provider warmup failure).
-  - **BugBase Cloud Attack Range (BAR GCP):** **`100%` (`11/11` deployed in-scope routes, `25.0` weighted score; `2` undeployed preconditions skipped)** with **`0` false positives** and `0` leaked resources (verified on the `574`-test engine with live `compute.instances.aggregatedList` GCE workload ingestion).
+  - **BugBase Cloud Attack Range (BAR GCP):** **`100%` (`11/11` deployed in-scope routes, `25.0` weighted score; `2` undeployed preconditions skipped)** with **`0` false positives** and `0` leaked resources (verified on the `577`-test engine with live `compute.instances.aggregatedList` GCE workload ingestion).
   - **1,000,000-Node / 10.05M-Edge Messy GCP Scale Proof (`5.51 GiB` peak RSS):** Validated across `1,000,000` hierarchy nodes (`15,000` folders across 3 tiers, `150,000` projects, `300,000` service accounts, `150,000` workloads, `384,999` buckets), `1,893,876` graph nodes, and **`10,046,557` edges** — completing escalation-path sweep in **`14.00 s`**, multi-hop probes in **`23.81 s`**, and **`10/10` real-world messy-GCP edge cases** (`deleted:` tombstoned principals, Org Policy v2 `dryRunSpec`/`reset`/`inheritFromParent`, conditional vs. unconditional overlap, WIF vs. `allAuthenticatedUsers`, nested-group Deny v2, and PAB boundaries).
   - **Offline 100-SA / 1,000-Binding Scale Gate:** Closed `50` escalation paths to `0` residual in **`1.98 s`** (`quotas_ok=True`, `0` broken benign).
 
@@ -201,7 +204,7 @@ Bastion brings the same zero-collateral, semantics-first engine to **Google Clou
 
 ## Independent Benchmarks & Enterprise Scale
 
-In addition to live AWS control-plane verification, Bastion is validated against published third-party escalation corpora and large-scale synthetic cloud estates:
+In addition to live AWS control-plane verification, Auga IAM is validated against published third-party escalation corpora and large-scale synthetic cloud estates:
 
 | Benchmark | Result |
 | :--- | :--- |
@@ -219,11 +222,11 @@ In addition to live AWS control-plane verification, Bastion is validated against
 
 ## CI/CD & Enterprise Rollout
 
-Bastion fits directly into existing cloud security and platform engineering workflows with zero initial disruption:
+Auga IAM fits directly into existing cloud security and platform engineering workflows with zero initial disruption:
 
 1. **Stage 1 — Read-Only Discovery & Risk Proof:** Connect read-only IAM and CloudTrail telemetry to surface verified, genuinely exploitable multi-hop paths alongside zero-collateral remediation proposals — modifying zero cloud resources.
 2. **Stage 2 — Verified Non-Breaking Containment:** Roll out minimal, self-defending guardrails across high-risk identities and converging paths, validated against observed production traffic.
-3. **Stage 3 — Standing Pre-Merge Hybrid Gate:** Integrate Bastion into Terraform pull requests (with native SARIF output for GitHub Code Scanning) to block split-brain `PR + Live Drift` escalations before merge.
+3. **Stage 3 — Standing Pre-Merge Hybrid Gate:** Integrate Auga IAM into Terraform pull requests (with native SARIF output for GitHub Code Scanning) to block split-brain `PR + Live Drift` escalations before merge.
 
 - **Zero-Privilege Read-Only Onboarding:** Ships with copy-paste IAM setup templates (`gcloud` and Terraform) scoped strictly to read-only viewer roles—no admin or write credentials required for Stage 1 diagnostics.
 - **Air-Gapped Offline Snapshot Mode (`--network=none`):** Supports ingesting offline `gcloud asset export` snapshots (NDJSON/JSON) alongside Terraform plans with zero live cloud API credentials or outbound network access.
@@ -233,15 +236,15 @@ Bastion fits directly into existing cloud security and platform engineering work
 
 ## MITRE ATT&CK Alignment
 
-Bastion maps its policy-evaluated authorization proofs directly onto the MITRE ATT&CK Cloud (IaaS) matrix (`T1098.001`, `T1098.003`, `T1548.005`, `T1078.004`, `T1190`). See [MITRE ATT&CK Coverage](./docs/MITRE_ATTACK_COVERAGE.md).
+Auga IAM maps its policy-evaluated authorization proofs directly onto the MITRE ATT&CK Cloud (IaaS) matrix (`T1098.001`, `T1098.003`, `T1548.005`, `T1078.004`, `T1190`). See [MITRE ATT&CK Coverage](./docs/MITRE_ATTACK_COVERAGE.md).
 
 ---
 
 ## Request an NDA Walkthrough & Live Demo
 
-Bastion is closed-source commercial software. For enterprise buyers, CISOs, and cloud security leaders interested in:
+Auga IAM is closed-source commercial software. For enterprise buyers, CISOs, and cloud security leaders interested in:
 - **Live AWS & GCP control-plane demonstration videos** and full technical verification dossiers
 - **Architecture & security review** under mutual NDA
 - **Read-only pilot evaluation** in a staging or production AWS or GCP environment
 
-**Contact:** [EdPliauga@gmail.com](mailto:EdPliauga@gmail.com)
+**Contact:** [Ed@Pliauga.co.uk](mailto:Ed@Pliauga.co.uk)
